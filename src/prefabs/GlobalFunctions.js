@@ -26,7 +26,7 @@ function dimBG(scene, opacity) {
     scene.dimBG = scene.add.rectangle(0, 0, w, h, 0x000000, opacity).setOrigin(0, 0);
 }
 
-function jiggle( scene,element) {
+function jiggle(scene, element) {
     scene.tweens.add({
         targets: element,
         scaleX: element.scale - element.scale/20,

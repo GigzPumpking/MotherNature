@@ -92,3 +92,5 @@ let music = [];
 
 let musicVolume = 0.5;
 let sfxVolume = 0.5;
+
+let brightness = 0.5;
