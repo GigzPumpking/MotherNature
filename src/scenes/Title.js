@@ -5,10 +5,7 @@ class Title extends Phaser.Scene {
 
     create() {
         this.camera = this.cameras.main;
-        this.camera.setBounds(0, 0, w, h);
-        this.camera.setZoom(1);
-        this.camera.centerOn(centerX, centerY);
-        this.camera.setAlpha(brightness);
+        cameraSettings(this.camera);
         
         currScene = title;
 

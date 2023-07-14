@@ -8,12 +8,7 @@ class Play extends Phaser.Scene {
         this.add.rectangle(centerX, centerY, w, h, 0xFFFFFF).setAlpha(0.5);
 
         this.camera = this.cameras.main;
-        this.camera.setBounds(0, 0, w, h);
-        this.camera.setZoom(1);
-        this.camera.centerOn(centerX, centerY);
-        this.camera.setAlpha(brightness);
-
-        //this.camera.postFX.addVignette(0.5, 0.5, 0.7);
+        cameraSettings(this.camera);
 
         // Play Music
 
