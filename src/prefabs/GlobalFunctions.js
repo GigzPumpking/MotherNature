@@ -9,7 +9,7 @@ function createOptionsButton(scene) {
     // Temporary Text Button, will be replaced with a sprite
     
     scene.optionsButton = new TextButton(scene, optionsX, optionsY, 'Options', textConfig, () => {
-        scene.scene.pause().launch('optionsScene');
+        scene.scene.pause(currScene).pause().launch('optionsScene');
     });
 
     /* new ButtonR(scene, optionsX, optionsY, 'optionsButton', rescale, () => {
@@ -21,7 +21,7 @@ function createInventoryButton(scene) {
     // Temporary Text Button, will be replaced with a sprite
     
     scene.inventoryButton = new TextButton(scene, inventoryX, inventoryY, 'Inventory', textConfig, () => {
-        scene.scene.pause().launch('inventoryScene');
+        scene.scene.pause(currScene).pause().launch('inventoryScene');
     });
 
     /* new ButtonR(scene, optionsX, optionsY, 'optionsButton', rescale, () => {
