@@ -14,7 +14,7 @@ let config = {
             fps: 60
         }
     },
-    scene: [ Load, Title, Credits, Options, Play, UI ]
+    scene: [ Load, Title, Credits, Options, Play, UI, Inventory ]
 }
 
 let game = new Phaser.Game(config);
@@ -26,13 +26,17 @@ let rescale = w / 192;
 let centerX = w / 2;
 let centerY = h / 2;
 
-// UI Button Locations
+// UI Button Locations (Technically obsolete, since a separate UI scene is used)
+// Still used to determine the location of buttons
 
 backX = w - 15*rescale;
 backY = 10*rescale;
 
 optionsX = 12*rescale;
 optionsY = 6*rescale;
+
+inventoryX = 14*rescale;
+inventoryY = 12*rescale;
 
 // Default Text Config
 
@@ -69,7 +73,9 @@ creditsConfig.fontSize = 4.4*rescale;
 
 // Hotkeys
 
-let keyESC, keySPACE, keyP, keyC, keyO, keyR, keyM;
+let keyESC, keySPACE, keyP, keyC, keyO, keyR, keyM, keyI;
+
+let uiESC, uiI;
 
 let keyW, keyA, keyS, keyD;
 
@@ -81,6 +87,7 @@ let credits = null;
 let options = null;
 let play = null;
 let ui = null;
+let inv = null;
 
 // Current & Previous Scene
 
@@ -97,3 +104,7 @@ let musicVolume = 0.5;
 let sfxVolume = 0.5;
 
 let brightness = 0.5;
+
+// Inventory
+
+let inventory = [];

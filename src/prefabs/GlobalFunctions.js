@@ -17,6 +17,18 @@ function createOptionsButton(scene) {
     }); */
 }
 
+function createInventoryButton(scene) {
+    // Temporary Text Button, will be replaced with a sprite
+    
+    scene.inventoryButton = new TextButton(scene, inventoryX, inventoryY, 'Inventory', textConfig, () => {
+        scene.scene.pause().launch('inventoryScene');
+    });
+
+    /* new ButtonR(scene, optionsX, optionsY, 'optionsButton', rescale, () => {
+        scene.scene.pause().launch('optionsScene');
+    }); */
+}
+
 function updateCurrPrev(curr, prev) {
     if (currScene != curr) currScene = curr;
     if (prevScene != prev) prevScene = prev;

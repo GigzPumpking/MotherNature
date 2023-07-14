@@ -1,7 +1,6 @@
 class ButtonR extends Button {
     constructor(scene, x, y, texture, scale, callback) {
-        super(scene, x, y, texture);
-
+        super(scene, x, y, texture, scale, callback);
         this.initialScale = scale;
     }
 

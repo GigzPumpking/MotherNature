@@ -16,6 +16,11 @@ class Load extends Phaser.Scene {
             loadingBar.destroy();
         });
 
+        // tempAssets
+        this.load.path = 'assets/tempAssets/';
+        this.load.image('cigbox', 'cigbox.png');
+        this.load.image('silhouette', 'silhouette_3.png');
+
     }
 
     create() {
@@ -27,11 +32,15 @@ class Load extends Phaser.Scene {
         credits = this.scene.get('creditScene');
         play = this.scene.get('playScene');
         ui = this.scene.get('uiScene');
+        inv = this.scene.get('inventoryScene');
 
         // Assign music to variables
         music = [];
 
-        // Initial scene
+        // Keybinds
+
+        uiESC = ui.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        uiI = ui.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
 
         this.scene.start('titleScene');
     }
