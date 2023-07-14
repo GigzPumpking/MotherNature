@@ -18,7 +18,7 @@ class Credits extends Phaser.Scene {
         this.add.text(centerX, creditsY + ySpacing, 'Albert Rivas: Initial Concept, Design, Lead Art/Animation, SFX', creditsConfig).setColor('#EAAD2B').setOrigin(0.5);
 
         new TextButton(this, centerX, centerY + 50*rescale, 'Back to Main Menu', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
-            this.scene.resume('titleScene').stop();
+            this.scene.resume(title).stop();
         })
 
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
@@ -27,7 +27,7 @@ class Credits extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyESC)) {
-            this.scene.start('titleScene');    
+            this.scene.start(title);    
         }
     }
 

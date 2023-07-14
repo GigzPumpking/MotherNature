@@ -8,7 +8,7 @@ function createBackButton(scene, stop, resume) {
 function createOptionsButton(scene) {
     // Temporary Text Button, will be replaced with a sprite
     
-    scene.pauseButton = new TextButton(scene, optionsX, optionsY, 'Options', textConfig, () => {
+    scene.optionsButton = new TextButton(scene, optionsX, optionsY, 'Options', textConfig, () => {
         scene.scene.pause().launch('optionsScene');
     });
 

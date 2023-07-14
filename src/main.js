@@ -4,7 +4,7 @@ let config = {
     height: 540,
     pixelArt: true,
     scale: {
-        mode: Phaser.Scale.FIT,
+        //mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER
     },
     physics: {
@@ -14,7 +14,7 @@ let config = {
             fps: 60
         }
     },
-    scene: [ Load, Title, Credits, Options, Play ]
+    scene: [ Load, Title, Credits, Options, Play, UI ]
 }
 
 let game = new Phaser.Game(config);
@@ -31,8 +31,8 @@ let centerY = h / 2;
 backX = w - 15*rescale;
 backY = 10*rescale;
 
-optionsX = 15*rescale;
-optionsY = 10*rescale;
+optionsX = 12*rescale;
+optionsY = 6*rescale;
 
 // Default Text Config
 
@@ -71,6 +71,8 @@ creditsConfig.fontSize = 4.4*rescale;
 
 let keyESC, keySPACE, keyP, keyC, keyO, keyR, keyM;
 
+let keyW, keyA, keyS, keyD;
+
 // Scene List
 
 let load = null;
@@ -78,6 +80,7 @@ let title = null;
 let credits = null;
 let options = null;
 let play = null;
+let ui = null;
 
 // Current & Previous Scene
 

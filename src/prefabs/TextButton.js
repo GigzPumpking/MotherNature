@@ -7,7 +7,7 @@ class TextButton {
         this.scene = scene;
         this.callback = callback;
         this.color = style.color;
-        this.intialSize = style.fontSize;
+        this.initialSize = parseInt(style.fontSize);
         this.button = scene.add.text(x, y, label)
             .setOrigin(0.5)
             .setPadding(10)
@@ -19,17 +19,18 @@ class TextButton {
     }
 
     pointerDown() {
+        this.pointerOut();
         this.callback();
     }
 
     pointerOut() {
         this.button.setStyle({ fill: this.color })
-        this.button.setFontSize(this.intialSize);
+        this.button.setFontSize(this.initialSize);
     }
 
     hoverOver() {
         this.button.setStyle({ fill: '#F39C12' });
-        this.button.setFontSize(this.intialSize * 1.1);
+        this.button.setFontSize(this.initialSize * 1.1);
     }
 
     updateText(text) {

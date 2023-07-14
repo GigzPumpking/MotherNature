@@ -4,7 +4,13 @@ class Title extends Phaser.Scene {
     }
 
     create() {
-        currScene = 'titleScene';
+        this.camera = this.cameras.main;
+        this.camera.setBounds(0, 0, w, h);
+        this.camera.setZoom(1);
+        this.camera.centerOn(centerX, centerY);
+        this.camera.setAlpha(brightness);
+        
+        currScene = title;
 
         // Temporary Text Title, replace with commented out sprite below when assets available
 
@@ -16,7 +22,7 @@ class Title extends Phaser.Scene {
         // Temporary Text Buttons, replace with commented out sprites when assets available
 
         this.creditsButton = new TextButton(this, centerX - 50*rescale, centerY + 35*rescale, 'CREDITS', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
-            this.scene.pause().launch('creditScene');
+            this.scene.pause().launch(credits);
         });
         
         /* new ButtonR(this, centerX - 50*rescale, centerY + 35*rescale, 'CREDITS', rescale/1.5, () => {
@@ -24,7 +30,7 @@ class Title extends Phaser.Scene {
         }); */
 
         this.optionsButton = new TextButton(this, centerX + 50*rescale, centerY + 35*rescale, 'OPTIONS', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
-            this.scene.pause().launch('optionsScene');
+            this.scene.pause().launch(options);
         });
         
         /* new ButtonR(this, centerX + 50*rescale, centerY + 35*rescale, 'OPTIONS', rescale/1.5, () => {
@@ -32,7 +38,7 @@ class Title extends Phaser.Scene {
         }); */
 
         this.startButton = new TextButton(this, centerX, centerY + 18*rescale, 'START', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
-            this.scene.start('playScene');
+            this.scene.start(play);
         });
 
         /* new ButtonR(this, centerX, centerY + 18*rescale, 'START', rescale/1.25, () => {
@@ -49,19 +55,15 @@ class Title extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyC)) {
-            this.scene.pause().launch('creditScene');
-        }
-
-        if (Phaser.Input.Keyboard.JustDown(keyP)) {
-            this.scene.pause().launch('pauseScene');
+            this.scene.pause().launch(credits);
         }
 
         if (Phaser.Input.Keyboard.JustDown(keyO)) {
-            this.scene.pause().launch('optionScene');
+            this.scene.pause().launch(options);
         }
 
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.scene.start('playScene');
+            this.scene.start(play);
         }
     }
 }

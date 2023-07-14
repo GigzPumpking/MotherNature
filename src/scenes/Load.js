@@ -24,8 +24,9 @@ class Load extends Phaser.Scene {
         load = this.scene.get('loadScene');
         title = this.scene.get('titleScene');
         options = this.scene.get('optionsScene');
-        credits = this.scene.get('creditsScene');
+        credits = this.scene.get('creditScene');
         play = this.scene.get('playScene');
+        ui = this.scene.get('uiScene');
 
         // Assign music to variables
         music = [];
