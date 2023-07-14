@@ -18,6 +18,7 @@ class Player extends Phaser.GameObjects.Sprite {
         keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
     update() {
@@ -38,7 +39,7 @@ class Player extends Phaser.GameObjects.Sprite {
     jumpUpdate() {
         this.isGrounded = this.body.blocked.down;
 
-        if (keyW.isDown && this.isGrounded) {
+        if ((keyW.isDown || keySPACE.isDown) && this.isGrounded) {
             this.body.setVelocityY(-200);
         }
     }
