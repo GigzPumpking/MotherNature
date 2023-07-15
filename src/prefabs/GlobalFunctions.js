@@ -1,8 +1,13 @@
 function createBackButton(scene, stop, resume) {
-    scene.backButton = new ButtonR(scene, backX, backY, 'backButton', rescale, () => {
+    scene.backButton = new TextButton(scene, backX, backY, 'Back', textConfig, () => {
         scene.scene.stop(stop);
         scene.scene.resume(resume);
     });
+    
+    /* new ButtonR(scene, backX, backY, 'backButton', rescale, () => {
+        scene.scene.stop(stop);
+        scene.scene.resume(resume);
+    }); */
 }
 
 function createOptionsButton(scene) {

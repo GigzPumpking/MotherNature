@@ -39,7 +39,9 @@ class Inventory extends Phaser.Scene {
             this.scene.resume(prevScene).stop();
         }) */
 
-        this.itemCreation(this.cigbox, 'cigbox', () => {});
+        for (let i = 0; i < inventory.length; i++) {
+            this.itemCreation(inventory[i], i, () => {});
+        }
     }
 
     update() {
@@ -48,11 +50,9 @@ class Inventory extends Phaser.Scene {
         }
     }
 
-    itemCreation(object, name, callback) {
+    itemCreation(name, index, callback) {
         if (inventory.includes(name)) {
-            // Create the cigbox item using the inventory array
-            let index = inventory.indexOf(name);
-            object = new ButtonR(this, this.xOffset + this.gap*index, this.yOffset, inventory[index], rescale, callback);
+            new ButtonR(this, this.xOffset + this.gap*index, this.yOffset, inventory[index], rescale, callback);
         }
     }
 }

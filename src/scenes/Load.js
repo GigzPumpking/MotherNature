@@ -33,6 +33,7 @@ class Load extends Phaser.Scene {
         play = this.scene.get('playScene');
         ui = this.scene.get('uiScene');
         inv = this.scene.get('inventoryScene');
+        mus = this.scene.get('musicScene');
 
         // Assign music to variables
         music = [];

@@ -31,6 +31,15 @@ class Play extends Phaser.Scene {
             this.cigbox.destroy();
             inventory.push('cigbox');
         });
+
+        this.cigbox2 = new Item(this, centerX + 200, centerY, 'cigbox', 0, rescale);
+
+        // On collision, add cigbox to inventory
+        this.physics.add.overlap(this.player, this.cigbox2, () => {
+            this.cigbox2.destroy();
+            inventory.push('cigbox');
+            this.scene.pause().launch(mus);
+        });
     }
 
     update() {

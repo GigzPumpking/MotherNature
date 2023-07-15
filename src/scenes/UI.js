@@ -22,5 +22,12 @@ class UI extends Phaser.Scene {
             this.scene.pause(currScene);
             this.scene.pause().launch(inv);
         }
+
+        if (currScene == mus && this.backButton == null) createBackButton(this, currScene, prevScene);
+
+        if (currScene == play && this.backButton != null) {
+            this.backButton.destroy();
+            this.backButton = null;
+        }
     }
 }
