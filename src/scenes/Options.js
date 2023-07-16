@@ -4,6 +4,8 @@ class Options extends Phaser.Scene {
     }
 
     create() {
+        dimBG(this, 0.6);
+
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);

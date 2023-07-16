@@ -38,7 +38,6 @@ class Play extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.cigbox2, () => {
             this.cigbox2.destroy();
             inventory.push('cigbox');
-            this.scene.pause().launch(mus);
         });
     }
 

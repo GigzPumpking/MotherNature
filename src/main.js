@@ -29,8 +29,8 @@ let centerY = h / 2;
 // UI Button Locations (Technically obsolete, since a separate UI scene is used)
 // Still used to determine the location of buttons
 
-backX = w - 15*rescale;
-backY = 10*rescale;
+backX = w - 10*rescale;
+backY = 5*rescale;
 
 optionsX = 12*rescale;
 optionsY = 6*rescale;
@@ -75,7 +75,7 @@ creditsConfig.fontSize = 4.4*rescale;
 
 let keyESC, keySPACE, keyP, keyC, keyO, keyR, keyM, keyI;
 
-let uiESC, uiI;
+let uiESC, uiI, uiM;
 
 let keyW, keyA, keyS, keyD;
 

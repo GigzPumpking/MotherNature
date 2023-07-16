@@ -6,6 +6,7 @@ class UI extends Phaser.Scene {
     create() {
         uiESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         uiI = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+        uiM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
         // Create Pause and Inventory Buttons
         createOptionsButton(this);
@@ -21,6 +22,11 @@ class UI extends Phaser.Scene {
         if (uiI.isDown) {
             this.scene.pause(currScene);
             this.scene.pause().launch(inv);
+        }
+
+        if (uiM.isDown) {
+            this.scene.pause(currScene);
+            this.scene.launch(mus);
         }
 
         if (currScene == mus && this.backButton == null) createBackButton(this, currScene, prevScene);
