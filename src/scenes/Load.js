@@ -21,6 +21,11 @@ class Load extends Phaser.Scene {
         this.load.image('cigbox', 'cigbox.png');
         this.load.image('silhouette', 'silhouette_3.png');
 
+        // cutsceneAssets
+        this.load.path = 'assets/';
+        this.load.image('snowLump', 'inlumpofsnow.png');
+        this.load.image('groundTilesetImage', 'groundTileset.png');
+        this.load.tilemapTiledJSON('groundJSON', 'groundTileset.json');
     }
 
     create() {

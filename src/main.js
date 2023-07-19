@@ -1,7 +1,7 @@
 let config = {
     type: Phaser.WEBGL,
-    width: 960,
-    height: 540,
+    width: 1200,
+    height: 675,
     pixelArt: true,
     scale: {
         //mode: Phaser.Scale.FIT,
@@ -18,11 +18,12 @@ let config = {
 }
 
 let game = new Phaser.Game(config);
+let map = null;
 
 let w = game.config.width;
 let h = game.config.height;
 
-let rescale = w / 192;
+let rescale = w / 240;
 let centerX = w / 2;
 let centerY = h / 2;
 
@@ -104,7 +105,7 @@ let music = [];
 let musicVolume = 0.5;
 let sfxVolume = 0.5;
 
-let brightness = 0.5;
+let brightness = 1;
 
 // Inventory
 
