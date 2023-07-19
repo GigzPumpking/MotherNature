@@ -29,6 +29,13 @@ class Load extends Phaser.Scene {
         this.load.image('tree1', 'itree1.png');
         this.load.image('tree2', 'itree2.png');
         this.load.image('treestack', 'repeatable_trees.png');
+
+        // characterAssets
+        this.load.path = 'assets/characters/';
+        this.load.image('agnes', 'agnes_sprite.png');
+        this.load.image('lamby', 'lamby_sprite.png');
+        this.load.image('tortoise', 'tortoise_sprite.png');
+
     }
 
     create() {

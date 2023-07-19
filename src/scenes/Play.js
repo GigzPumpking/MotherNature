@@ -17,7 +17,6 @@ class Play extends Phaser.Scene {
         groundLayer.setScale(rescale);
         groundLayer.setCollisionByProperty({ Collision: true });
 
-
         this.camera = this.cameras.main;
         cameraSettings(this.camera);
         this.camera.setBounds(0, 0, map.widthInPixels * rescale, map.heightInPixels * rescale);
@@ -32,7 +31,7 @@ class Play extends Phaser.Scene {
         this.scene.launch(ui);
 
         // Add Player
-        this.player = new Player(this, centerX, centerY, 'silhouette', 0, rescale/2);
+        this.player = new Player(this, centerX, centerY, 'agnes', 0, rescale/2);
         this.physics.add.collider(this.player, groundLayer);
 
         // Add cigbox temp asset with gravity

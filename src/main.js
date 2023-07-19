@@ -14,7 +14,7 @@ let config = {
             fps: 60
         }
     },
-    scene: [ Load, Title, Credits, Options, Play, UI, Inventory, Music ]
+    scene: [ Load, Title, Credits, Play, UI, Inventory, Music, Options ]
 }
 
 let game = new Phaser.Game(config);

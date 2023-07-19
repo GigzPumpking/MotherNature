@@ -4,13 +4,13 @@ class Options extends Phaser.Scene {
     }
 
     create() {
-        dimBG(this, 0.6);
+        //dimBG(this, 0.8);
 
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
-        this.menu = this.add.rectangle(centerX, centerY + 5*rescale, 100*rescale, 65*rescale, 0xFFFFFF, 0.6);
+        this.menu = this.add.rectangle(centerX, centerY + 5*rescale, 100*rescale, 65*rescale, 0xFFFFFF, 0.8);
 
         // Temporary Text Buttons, replace with commented out sprites when assets available
 
@@ -76,7 +76,7 @@ class Options extends Phaser.Scene {
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyESC)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
             music = [];
             music.forEach(song => {
                 if (song.isPaused) song.resume();
@@ -85,7 +85,7 @@ class Options extends Phaser.Scene {
         }
 
         if (currScene != title) {
-            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
                 music = [];
                 music.forEach(song => {
                     if (song.isPlaying || song.isPaused) song.stop();
@@ -94,7 +94,7 @@ class Options extends Phaser.Scene {
                 this.scene.stop(currScene).stop(ui).start(currScene).stop();
             }
     
-            if (Phaser.Input.Keyboard.JustDown(keyM)) {
+            if (Phaser.Input.Keyboard.JustDown(this.keyM)) {
                 if (currScene == title) this.scene.resume(title).stop();
     
                 music = [];
