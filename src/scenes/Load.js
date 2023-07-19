@@ -21,11 +21,14 @@ class Load extends Phaser.Scene {
         this.load.image('cigbox', 'cigbox.png');
         this.load.image('silhouette', 'silhouette_3.png');
 
-        // cutsceneAssets
+        // backgroundAssets
         this.load.path = 'assets/';
         this.load.image('snowLump', 'inlumpofsnow.png');
         this.load.image('groundTilesetImage', 'groundTileset.png');
         this.load.tilemapTiledJSON('groundJSON', 'groundTileset.json');
+        this.load.image('tree1', 'itree1.png');
+        this.load.image('tree2', 'itree2.png');
+        this.load.image('treestack', 'repeatable_trees.png');
     }
 
     create() {

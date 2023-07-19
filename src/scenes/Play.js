@@ -8,10 +8,13 @@ class Play extends Phaser.Scene {
 
         map = this.add.tilemap('groundJSON');
         let tileset = map.addTilesetImage('groundTileset', 'groundTilesetImage');
+
+        for (let i = 0; centerX + i*240*rescale < map.widthInPixels * rescale; i++) {
+            this.createTree(centerX + i*240*rescale, centerY, rescale, 'treestack');
+        }
+        
         let groundLayer = map.createLayer('Ground', tileset, 0, 0);
         groundLayer.setScale(rescale);
-
-        // set collision between player and groundLayer
         groundLayer.setCollisionByProperty({ Collision: true });
 
 
@@ -60,6 +63,10 @@ class Play extends Phaser.Scene {
 
         // Update Player
         this.player.update();
+    }
+
+    createTree(x, y, scale, texture) {
+        this.add.sprite(x, y, texture).setScale(scale);
     }
 
 }
