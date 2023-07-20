@@ -16,6 +16,18 @@ class Play extends Phaser.Scene {
         let groundLayer = map.createLayer('Ground', tileset, 0, 0);
         groundLayer.setScale(rescale);
 
+        this.house = this.add.sprite(centerX/2 - 20*rescale, centerY, 'house').setScale(rescale);
+        this.snowlump = this.add.sprite(centerX/2 + 25*rescale, centerY + 50*rescale, 'snowlump').setScale(rescale);
+        this.rock = this.add.sprite(centerX/2 + 60*rescale, centerY + 50*rescale, 'rock').setScale(rescale);
+
+        // Tortoise House
+
+        this.tortoiseHouse = this.add.sprite(centerX + 100*rescale, centerY + 5*rescale, 'tortoiseHouse').setScale(rescale);
+        this.tortoiseHouseBase = this.add.sprite(centerX + 100*rescale, centerY + 5*rescale, 'tortoiseHouseBase').setScale(rescale);
+        this.tortoiseHousePillar = this.add.sprite(centerX + 100*rescale, centerY + 5*rescale, 'tortoiseHousePillars').setScale(rescale);
+        this.tortoiseHouseSnow = this.add.sprite(centerX + 100*rescale, centerY - 20*rescale, 'tortoiseHouseSnow').setScale(rescale);
+        this.tortoiseHouseStairs = this.add.sprite(centerX + 100*rescale, centerY + 50*rescale, 'tortoiseHouseStairs').setScale(rescale);
+
         this.mapLength = map.widthInPixels * rescale;
 
         this.camera = this.cameras.main;
@@ -32,7 +44,7 @@ class Play extends Phaser.Scene {
         this.scene.launch(ui);
 
         // Add Player
-        this.player = new Player(this, centerX, centerY + 5*rescale, 'agnes', 0, rescale);
+        this.player = new Player(this, centerX/2 - 20*rescale, centerY + 48.5*rescale, 'agnes', 0, rescale);
 
         // Add cigbox temp asset with gravity
         this.cigbox = new Item(this, centerX + 100, centerY, 'cigbox', 0, rescale);

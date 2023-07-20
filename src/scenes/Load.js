@@ -29,12 +29,23 @@ class Load extends Phaser.Scene {
         this.load.image('tree1', 'itree1.png');
         this.load.image('tree2', 'itree2.png');
         this.load.image('treestack', 'repeatable_trees.png');
+        this.load.image('house', 'intro_house.png');
+        this.load.image('snowlump', 'inlumpofsnow.png');
+        this.load.image('rock', 'rock.png');
 
         // characterAssets
         this.load.path = 'assets/characters/';
         this.load.image('agnes', 'agnes_sprite.png');
         this.load.image('lamby', 'lamby_sprite.png');
         this.load.image('tortoise', 'tortoise_sprite.png');
+
+        // tortoiseHouse Assets
+        this.load.path = 'assets/tortoiseHouse/';
+        this.load.image('tortoiseHouse', 'tortoiseHouse.png');
+        this.load.image('tortoiseHouseBase', 'tortoiseHouseBase.png');
+        this.load.image('tortoiseHousePillars', 'tortoiseHousePillars.png');
+        this.load.image('tortoiseHouseSnow', 'tortoiseHouseSnow.png');
+        this.load.image('tortoiseHouseStairs', 'tortoiseHouseStairs.png');
 
     }
 
