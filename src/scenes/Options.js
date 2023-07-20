@@ -4,13 +4,12 @@ class Options extends Phaser.Scene {
     }
 
     create() {
-        //dimBG(this, 0.8);
 
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
-        this.menu = this.add.rectangle(centerX, centerY + 5*rescale, 100*rescale, 65*rescale, 0xFFFFFF, 0.8);
+        this.menu = this.add.rectangle(centerX, centerY + 5*rescale, 100*rescale, 65*rescale, 0x000000, 0.7);
 
         // Temporary Text Buttons, replace with commented out sprites when assets available
 
@@ -111,7 +110,7 @@ class Options extends Phaser.Scene {
         this.brightnessBarText = this.add.text(centerX, centerY + 25*rescale, 'Brightness', textConfig).setOrigin(0.5);
 
         // Add a rectangle to follow the circle
-        let brightnessBar = this.add.rectangle(centerX, centerY + 30*rescale, 200, 5, 0x000000).setOrigin(0.5);
+        let brightnessBar = this.add.rectangle(centerX, centerY + 30*rescale, 200, 5, 0xFFFFFF).setOrigin(0.5);
         // Add a circle to be dragged horizontally to change brightness
         let currentBrightness = 200 * brightness + brightnessBar.x - 100;
         let brightnessCircle = this.add.circle(currentBrightness, centerY + 30*rescale, 10, 0xff0000).setOrigin(0.5);
@@ -123,7 +122,7 @@ class Options extends Phaser.Scene {
             else if (dragX > brightnessBar.x + 100) this.x = brightnessBar.x + 100;
 
             brightness = (this.x - brightnessBar.x + 100) / 200;
-            currScene.camera.setAlpha(brightness);
+            brightnessBG.setAlpha(1 - brightness);
         });
     }
 

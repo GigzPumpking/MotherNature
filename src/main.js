@@ -105,6 +105,7 @@ let music = [];
 let musicVolume = 0.5;
 let sfxVolume = 0.5;
 
+let brightnessBG = null;
 let brightness = 1;
 
 // Inventory

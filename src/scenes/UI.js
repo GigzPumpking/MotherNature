@@ -4,6 +4,9 @@ class UI extends Phaser.Scene {
     }
 
     create() {
+        // Create a large black rectangle to dim the background
+        brightnessBG = this.add.rectangle(0, 0, map.widthInPixels * rescale, h + 10*rescale, 0x000000, brightness).setOrigin(0, 0);
+
         uiESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         uiI = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
         uiM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
@@ -14,6 +17,9 @@ class UI extends Phaser.Scene {
     }
 
     update() {
+        console.log(brightnessBG.alpha);
+        brightnessBG.setAlpha(1 - brightness);
+
         if (uiESC.isDown) {
             this.scene.pause(currScene);
             this.scene.pause().launch(options);

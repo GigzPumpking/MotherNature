@@ -67,5 +67,4 @@ function cameraSettings(camera) {
     camera.setBounds(0, 0, w, h);
     camera.setZoom(1);
     camera.centerOn(centerX, centerY);
-    camera.setAlpha(brightness);
 }
