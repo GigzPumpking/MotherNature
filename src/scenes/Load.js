@@ -32,7 +32,6 @@ class Load extends Phaser.Scene {
         this.load.image('house', 'intro_house.png');
         this.load.image('snowlump', 'inlumpofsnow.png');
         this.load.image('rock', 'rock.png');
-        this.load.image('slice', 'slice.png');
 
         // characterAssets
         this.load.path = 'assets/characters/';
@@ -52,6 +51,16 @@ class Load extends Phaser.Scene {
         this.load.image('tortoiseHousePillars', 'tortoiseHousePillars.png');
         this.load.image('tortoiseHouseSnow', 'tortoiseHouseSnow.png');
         this.load.image('tortoiseHouseStairs', 'tortoiseHouseStairs.png');
+
+        // guitar minigame assets
+        this.load.path = 'assets/guitarminigame/';
+        this.load.image('circle', 'circle.png');
+        this.load.image('dad_head', 'dad_head.png');
+        this.load.image('green_bar', 'green_bar.png');
+        this.load.image('red_bar', 'red_bar.png');
+        this.load.image('guitarBG', 'minigame_bg.png');
+        this.load.image('slice', 'slice.png');
+        this.load.image('nigel_shadow', 'nigel_shadow.png');
 
     }
 
