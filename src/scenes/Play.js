@@ -43,8 +43,21 @@ class Play extends Phaser.Scene {
 
         this.scene.launch(ui);
 
+        // Add Abby
+        this.abby = this.add.sprite(centerX/2 + 100*rescale, centerY + 48.5*rescale, 'abby', 0).setScale(rescale);
+        this.abby.flipX = true;
+        this.abby.anims.play('abby_idle');
+
+        // Add Tortoise
+        this.tortoise = this.add.sprite(centerX/2 + 200*rescale, centerY + 48.5*rescale, 'tortoise', 0).setScale(rescale);
+        this.tortoise.flipX = true;
+
+        // Add Lamby
+
+        this.lamby = this.add.sprite(centerX/2 - 30*rescale, centerY + 48.5*rescale, 'lamby', 0).setScale(rescale);
+
         // Add Player
-        this.player = new Player(this, centerX/2 - 20*rescale, centerY + 48.5*rescale, 'agnes', 0, rescale);
+        this.player = new Player(this, centerX/2, centerY + 48.5*rescale, 'agnes', 0, rescale);
 
         // Add cigbox temp asset with gravity
         this.cigbox = new Item(this, centerX + 100, centerY, 'cigbox', 0, rescale);

@@ -40,6 +40,11 @@ class Load extends Phaser.Scene {
         this.load.image('lamby', 'lamby_sprite.png');
         this.load.image('tortoise', 'tortoise_sprite.png');
 
+        // character animations
+        this.load.path = 'assets/characters/animations/';
+        this.load.image('abby', 'abby_idle.png');
+        this.load.spritesheet('abbyIdle', 'abby_idle.png', { frameWidth: 24, frameHeight: 32, startFrame: 0, endFrame: 6 });
+
         // tortoiseHouse Assets
         this.load.path = 'assets/tortoiseHouse/';
         this.load.image('tortoiseHouse', 'tortoiseHouse.png');
@@ -64,6 +69,14 @@ class Load extends Phaser.Scene {
 
         // Assign music to variables
         music = [];
+
+        // Animation
+        play.anims.create({
+            key: 'abby_idle',
+            frames: this.anims.generateFrameNumbers('abbyIdle', { start: 0, end: 6, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
 
         // Keybinds
 
