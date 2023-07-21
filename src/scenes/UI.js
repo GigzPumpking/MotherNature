@@ -17,7 +17,6 @@ class UI extends Phaser.Scene {
     }
 
     update() {
-        console.log(brightnessBG.alpha);
         brightnessBG.setAlpha(1 - brightness);
 
         if (uiESC.isDown) {

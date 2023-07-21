@@ -32,6 +32,7 @@ class Load extends Phaser.Scene {
         this.load.image('house', 'intro_house.png');
         this.load.image('snowlump', 'inlumpofsnow.png');
         this.load.image('rock', 'rock.png');
+        this.load.image('slice', 'slice.png');
 
         // characterAssets
         this.load.path = 'assets/characters/';
