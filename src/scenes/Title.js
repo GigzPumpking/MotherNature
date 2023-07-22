@@ -44,22 +44,22 @@ class Title extends Phaser.Scene {
 
         this.sound.stopAll();
 
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
-        keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        keyO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
+        this.keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+        this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.keyO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyC)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyC)) {
             this.scene.pause().launch(credits);
         }
 
-        if (Phaser.Input.Keyboard.JustDown(keyO)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyO)) {
             this.scene.pause().launch(options);
         }
 
-        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keySPACE)) {
             this.scene.start(play);
         }
     }

@@ -21,16 +21,13 @@ class Load extends Phaser.Scene {
         this.load.image('cigbox', 'cigbox.png');
         this.load.image('silhouette', 'silhouette_3.png');
 
-        // backgroundAssets
-        this.load.path = 'assets/';
-        this.load.image('snowLump', 'inlumpofsnow.png');
-        this.load.image('groundTilesetImage', 'groundTileset.png');
+        // environmentAssets
+        this.load.path = 'assets/environment/';
+        this.load.image('snowLump', 'lumpOfSnow.png');
+        this.load.image('groundTilesetImage', 'groundTilemap.png');
         this.load.tilemapTiledJSON('groundJSON', 'groundTileset.json');
-        this.load.image('tree1', 'itree1.png');
-        this.load.image('tree2', 'itree2.png');
-        this.load.image('treestack', 'repeatable_trees.png');
-        this.load.image('house', 'intro_house.png');
-        this.load.image('snowlump', 'inlumpofsnow.png');
+        this.load.image('treestack', 'repeatableTrees.png');
+        this.load.image('house', 'agnes_house.png');
         this.load.image('rock', 'rock.png');
 
         // characterAssets
@@ -38,6 +35,7 @@ class Load extends Phaser.Scene {
         this.load.image('agnes', 'agnes_sprite.png');
         this.load.image('lamby', 'lamby_sprite.png');
         this.load.image('tortoise', 'tortoise_sprite.png');
+        this.load.image('abby', 'abby_sprite.png');
 
         // character animations
         this.load.path = 'assets/characters/animations/';
@@ -45,7 +43,7 @@ class Load extends Phaser.Scene {
         this.load.spritesheet('abbyIdle', 'abby_idle.png', { frameWidth: 24, frameHeight: 32, startFrame: 0, endFrame: 6 });
 
         // tortoiseHouse Assets
-        this.load.path = 'assets/tortoiseHouse/';
+        this.load.path = 'assets/environment/tortoiseHouse/';
         this.load.image('tortoiseHouse', 'tortoiseHouse.png');
         this.load.image('tortoiseHouseBase', 'tortoiseHouseBase.png');
         this.load.image('tortoiseHousePillars', 'tortoiseHousePillars.png');
@@ -87,10 +85,6 @@ class Load extends Phaser.Scene {
             repeat: -1
         });
 
-        // Keybinds
-
-        uiESC = ui.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-        uiI = ui.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
 
         this.scene.start('titleScene');
     }

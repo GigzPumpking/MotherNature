@@ -15,11 +15,11 @@ class Player extends Phaser.GameObjects.Sprite {
         this.playerSpeed = 200;
         this.isGrounded = false;
 
-        keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        keyS = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.keyS = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
     update() {
@@ -28,10 +28,10 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     sideScrollerMovement() {
-        if (keyA.isDown) {
+        if (this.keyA.isDown) {
             this.body.setVelocityX(-this.playerSpeed);
             this.flipX = true;
-        } else if (keyD.isDown) {
+        } else if (this.keyD.isDown) {
             this.body.setVelocityX(this.playerSpeed);
             this.flipX = false;
         } else {
@@ -42,7 +42,7 @@ class Player extends Phaser.GameObjects.Sprite {
     jumpUpdate() {
         this.isGrounded = this.body.blocked.down;
 
-        if ((keyW.isDown || keySPACE.isDown) && this.isGrounded) {
+        if ((this.keyW.isDown || this.keySPACE.isDown) && this.isGrounded) {
             this.body.setVelocityY(-200);
         }
     }

@@ -68,3 +68,13 @@ function cameraSettings(camera) {
     camera.setZoom(1);
     camera.centerOn(centerX, centerY);
 }
+
+function circleXY(w, h, r, t) {
+    var cos = Math.cos(t);
+    var sin = Math.sin(t);
+
+    var x = w - r * sin;
+    var y = h + r * cos;
+
+    return [x, y];
+}

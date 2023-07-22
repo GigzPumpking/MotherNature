@@ -17,7 +17,7 @@ class Play extends Phaser.Scene {
         groundLayer.setScale(rescale);
 
         this.house = this.add.sprite(centerX/2 - 20*rescale, centerY, 'house').setScale(rescale);
-        this.snowlump = this.add.sprite(centerX/2 + 25*rescale, centerY + 50*rescale, 'snowlump').setScale(rescale);
+        this.snowlump = this.add.sprite(centerX/2 + 25*rescale, centerY + 50*rescale, 'snowLump').setScale(rescale);
         this.rock = this.add.sprite(centerX/2 + 60*rescale, centerY + 50*rescale, 'rock').setScale(rescale);
 
         // Tortoise House
@@ -44,20 +44,20 @@ class Play extends Phaser.Scene {
         this.scene.launch(ui);
 
         // Add Abby
-        this.abby = this.add.sprite(centerX/2 + 100*rescale, centerY + 48.5*rescale, 'abby', 0).setScale(rescale);
+        this.abby = new NPC(this, centerX/2 + 100*rescale, centerY + 65*rescale, 'abby', 0, rescale).setOrigin(0.5, 1);
         this.abby.flipX = true;
         this.abby.anims.play('abby_idle');
 
         // Add Tortoise
-        this.tortoise = this.add.sprite(centerX/2 + 200*rescale, centerY + 48.5*rescale, 'tortoise', 0).setScale(rescale);
+        this.tortoise = new NPC(this, centerX/2 + 200*rescale, centerY + 30*rescale, 'tortoise', 0, rescale).setOrigin(0.5, 0);
         this.tortoise.flipX = true;
 
         // Add Lamby
 
-        this.lamby = this.add.sprite(centerX/2 - 30*rescale, centerY + 48.5*rescale, 'lamby', 0).setScale(rescale);
+        this.lamby = new NPC(this, 20*rescale, 130*rescale, 'lamby', 0, rescale).setOrigin(0.5, 1);
 
         // Add Player
-        this.player = new Player(this, centerX/2, centerY + 48.5*rescale, 'agnes', 0, rescale);
+        this.player = new Player(this, centerX/2, 102*rescale, 'agnes', 0, rescale).setOrigin(0.5, 0);
 
         // Add cigbox temp asset with gravity
         this.cigbox = new Item(this, centerX + 100, centerY, 'cigbox', 0, rescale);
@@ -82,6 +82,9 @@ class Play extends Phaser.Scene {
 
         // Set collision for floor
         this.physics.add.collider(this.player, this.floor);
+        this.physics.add.collider(this.abby, this.floor);
+        this.physics.add.collider(this.tortoise, this.floor);
+        this.physics.add.collider(this.lamby, this.floor);
         this.physics.add.collider(this.cigbox, this.floor);
         this.physics.add.collider(this.cigbox2, this.floor);
     }
@@ -93,6 +96,8 @@ class Play extends Phaser.Scene {
 
         // Update Player
         this.player.update();
+        
+        console.log(this.lamby.y);
     }
 
     createTree(x, y, scale, texture) {

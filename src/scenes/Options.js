@@ -36,7 +36,7 @@ class Options extends Phaser.Scene {
                     if (song.isPlaying || song.isPaused) song.stop();
                 })
 
-                this.scene.stop(currScene).stop(ui).start(currScene).stop();
+                this.scene.stop(currScene).stop(ui).start(currScene).start(ui).stop();
             })
 
             /* new ButtonR(this, centerX - 1.5*rescale, centerY + 4.5*rescale, 'restartButton', rescale, () => {
@@ -56,6 +56,8 @@ class Options extends Phaser.Scene {
                     if (song.isPlaying || song.isPaused) song.stop();
                 })
 
+                if (currScene != play) this.scene.stop(play);
+
                 this.scene.stop(currScene).stop(ui).start(title);
             })
             
@@ -69,6 +71,10 @@ class Options extends Phaser.Scene {
 
                 this.scene.stop(currScene).stop(ui).start(title);
             }) */
+
+            if (currScene != play) {
+                createBackButton(this, currScene, prevScene);
+            }
         }
 
         this.brightnessBar();
@@ -90,7 +96,7 @@ class Options extends Phaser.Scene {
                     if (song.isPlaying || song.isPaused) song.stop();
                 })
     
-                this.scene.stop(currScene).stop(ui).start(currScene).stop();
+                this.scene.stop(currScene).stop(ui).start(currScene).start(ui).stop();
             }
     
             if (Phaser.Input.Keyboard.JustDown(this.keyM)) {
@@ -100,6 +106,8 @@ class Options extends Phaser.Scene {
                 music.forEach(song => {
                     if (song.isPlaying || song.isPaused) song.stop();
                 })
+
+                if (currScene != play) this.scene.stop(play);
     
                 this.scene.stop(currScene).stop(ui).start(title);
             }

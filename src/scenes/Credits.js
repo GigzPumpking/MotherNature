@@ -41,12 +41,12 @@ class Credits extends Phaser.Scene {
             this.scene.resume(title).stop();
         })
 
-        keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyESC)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
             this.scene.start(title);    
         }
     }

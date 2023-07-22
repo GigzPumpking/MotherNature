@@ -15,14 +15,11 @@ class RotatingObject extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        var cos = Math.cos(this.t);
-        var sin = Math.sin(this.t);
+        this.cos = Math.cos(this.t);
+        this.sin = Math.sin(this.t);
 
-        this.x = centerX + this.r * cos;
-        this.y = centerY + this.r * sin;
-
-        if (sin > 0) this.flipX = true;
-        else this.flipX = false;
+        this.x = centerX + this.r * this.cos;
+        this.y = (centerY + 21.5*rescale) + this.r * this.sin;
 
         this.t += this.speed;
     }

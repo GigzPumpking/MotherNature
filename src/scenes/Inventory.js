@@ -4,7 +4,7 @@ class Inventory extends Phaser.Scene {
     }
 
     create() {
-        keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         prevScene = currScene;
         currScene = inv;
@@ -45,7 +45,7 @@ class Inventory extends Phaser.Scene {
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyESC)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
             this.scene.resume(prevScene).resume(ui).stop();
         }
     }

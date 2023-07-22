@@ -72,14 +72,6 @@ const creditsConfig = Object.assign({}, textConfig, {fontFamily: 'Verdana', back
 // Set creditsConfig fontSize to 2.2*rescale
 creditsConfig.fontSize = 4.4*rescale;
 
-// Hotkeys
-
-let keyESC, keySPACE, keyP, keyC, keyO, keyR, keyM, keyI;
-
-let uiESC, uiI, uiM;
-
-let keyW, keyA, keyS, keyD;
-
 // Scene List
 
 let load = null;
