@@ -78,3 +78,12 @@ function circleXY(w, h, r, t) {
 
     return [x, y];
 }
+
+function pauseForDuration(scene, animation, duration) {
+    animation.paused = true;
+    // Wait for the specified duration
+    scene.time.delayedCall(duration, () => {
+        // Then resume the animation
+        animation.paused = false;
+    }, [], scene);
+  }

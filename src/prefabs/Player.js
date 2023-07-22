@@ -31,11 +31,14 @@ class Player extends Phaser.GameObjects.Sprite {
         if (this.keyA.isDown) {
             this.body.setVelocityX(-this.playerSpeed);
             this.flipX = true;
+            play.player.anims.play('agnes_walk', true);
         } else if (this.keyD.isDown) {
             this.body.setVelocityX(this.playerSpeed);
             this.flipX = false;
+            play.player.anims.play('agnes_walk', true);
         } else {
             this.body.setVelocityX(0);
+            play.player.anims.play('agnes_idle', true);
         }
     }
 

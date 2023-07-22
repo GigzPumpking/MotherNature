@@ -43,21 +43,21 @@ class Play extends Phaser.Scene {
 
         this.scene.launch(ui);
 
+        // Add Player
+        this.player = new Player(this, centerX/2, 102*rescale, 'agnes', 0, rescale).setOrigin(0.5, 0).setDepth(2);
+
         // Add Abby
-        this.abby = new NPC(this, centerX/2 + 100*rescale, centerY + 65*rescale, 'abby', 0, rescale).setOrigin(0.5, 1);
+        this.abby = new NPC(this, centerX/2 + 100*rescale, centerY + 65*rescale, 'abby', 0, rescale, false).setOrigin(0.5, 1);
         this.abby.flipX = true;
         this.abby.anims.play('abby_idle');
 
         // Add Tortoise
-        this.tortoise = new NPC(this, centerX/2 + 200*rescale, centerY + 30*rescale, 'tortoise', 0, rescale).setOrigin(0.5, 0);
+        this.tortoise = new NPC(this, centerX/2 + 200*rescale, centerY + 30*rescale, 'tortoise', 0, rescale, false).setOrigin(0.5, 0);
         this.tortoise.flipX = true;
 
         // Add Lamby
 
-        this.lamby = new NPC(this, 20*rescale, 130*rescale, 'lamby', 0, rescale).setOrigin(0.5, 1);
-
-        // Add Player
-        this.player = new Player(this, centerX/2, 102*rescale, 'agnes', 0, rescale).setOrigin(0.5, 0);
+        this.lamby = new NPC(this, 20*rescale, 130*rescale, 'lamby', 0, rescale, true, this.player).setOrigin(0.5, 1);
 
         // Add cigbox temp asset with gravity
         this.cigbox = new Item(this, centerX + 100, centerY, 'cigbox', 0, rescale);
@@ -87,6 +87,9 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.lamby, this.floor);
         this.physics.add.collider(this.cigbox, this.floor);
         this.physics.add.collider(this.cigbox2, this.floor);
+
+        this.player.on('animationupdate', this.onAnimationUpdate, this);
+        this.lamby.on('animationupdate', this.onAnimationUpdate, this);
     }
 
     update() {
@@ -96,12 +99,23 @@ class Play extends Phaser.Scene {
 
         // Update Player
         this.player.update();
-        
-        console.log(this.lamby.y);
+        this.lamby.update();
     }
 
     createTree(x, y, scale, texture) {
         this.add.sprite(x, y, texture).setScale(scale);
+    }
+
+    onAnimationUpdate(animation, frame) {
+        if (animation.key === 'agnes_idle' || animation.key === 'lamby_idle') {
+            if (frame.index === 1) {
+                pauseForDuration(play, animation, 400);
+            } else if (frame.index === 3) {
+                pauseForDuration(play, animation, 200);
+            } else {
+                pauseForDuration(play, animation, 100);
+            }
+        }
     }
 
 }
