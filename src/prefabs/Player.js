@@ -9,7 +9,7 @@ class Player extends Phaser.GameObjects.Sprite {
         this.scale = scale;
 
         this.body.setCollideWorldBounds(true);
-        this.body.setGravityY(400);
+        this.body.setGravityY(800);
         this.body.setDragX(1000);
 
         this.playerSpeed = 200;

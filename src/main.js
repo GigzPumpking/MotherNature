@@ -17,6 +17,11 @@ let config = {
     scene: [ Load, Title, Credits, Play, UI, Inventory, Music, Options ]
 }
 
+var fontStyle = {
+    fontFamily: 'mxfont', // This will be used to reference the font later
+    src: 'url("./assets/m6x11.ttf")' // The URL to your TTF font file
+};
+
 let game = new Phaser.Game(config);
 let map = null;
 
@@ -42,7 +47,7 @@ inventoryY = 12*rescale;
 // Default Text Config
 
 let textConfig = {
-    fontFamily: 'Courier',
+    fontFamily: fontStyle.fontFamily,
     fontSize: '40px',
     color: '#FFFFFF',
     align: 'center',
