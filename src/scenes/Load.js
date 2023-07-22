@@ -62,7 +62,6 @@ class Load extends Phaser.Scene {
         this.load.image('guitarBG', 'minigame_bg.png');
         this.load.image('slice', 'slice.png');
         this.load.image('nigel_shadow', 'nigel_shadow.png');
-
     }
 
     create() {
@@ -109,6 +108,7 @@ class Load extends Phaser.Scene {
             repeat: -1
         });
 
-        this.scene.start('titleScene');
+        // Start Title Scene
+        this.scene.start(title);
     }
 }

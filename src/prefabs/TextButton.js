@@ -4,7 +4,6 @@
 
 class TextButton {
     constructor(scene, x, y, label, style, callback) {
-        console.log(style);
         this.scene = scene;
         this.callback = callback;
         this.color = style.color;

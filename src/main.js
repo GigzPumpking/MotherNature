@@ -19,7 +19,7 @@ let config = {
 
 var fontStyle = {
     fontFamily: 'mxfont', // This will be used to reference the font later
-    src: 'url("./assets/m6x11.ttf")' // The URL to your TTF font file
+    src: 'url("./assets/detmonowebr.ttf")' // The URL to your TTF font file
 };
 
 let game = new Phaser.Game(config);
@@ -65,10 +65,6 @@ textConfig.fontSize = 4*rescale;
 // Text Config for Title Text
 
 const titleConfig = Object.assign({}, textConfig, {color: '#FFF21A'});
-
-// Set titleConfig fontSize to 6*rescale
-
-titleConfig.fontSize = 12*rescale;
 
 // Text Config for Credits Menu
 

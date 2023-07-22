@@ -4,6 +4,7 @@ class Title extends Phaser.Scene {
     }
 
     create() {
+
         this.camera = this.cameras.main;
         cameraSettings(this.camera);
         
@@ -11,7 +12,7 @@ class Title extends Phaser.Scene {
 
         // Temporary Text Title, replace with commented out sprite below when assets available
 
-        this.title = this.add.text(centerX, centerY - 25*rescale, 'MOTHER NATURE', titleConfig).setOrigin(0.5).setFontSize(10*rescale);
+        this.title = this.add.text(centerX, centerY - 25*rescale, 'MOTHER NATURE', titleConfig).setOrigin(0.5).setFontSize(18*rescale);
         /* = this.add.sprite(centerX, centerY - 25*rescale, 'TITLE').setScale(rescale) */;
 
         jiggle(this, this.title);
