@@ -23,23 +23,31 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        this.sideScrollerMovement();
-        this.jumpUpdate();
+        if (!cutscene) {
+            this.jumpUpdate();
+        }
+
+        if (!this.sideScrollerMovement()) {
+            play.player.anims.play('agnes_idle', true);
+        };
     }
 
     sideScrollerMovement() {
-        if (this.keyA.isDown) {
-            this.body.setVelocityX(-this.playerSpeed);
-            this.flipX = true;
-            play.player.anims.play('agnes_walk', true);
-        } else if (this.keyD.isDown) {
-            this.body.setVelocityX(this.playerSpeed);
-            this.flipX = false;
-            play.player.anims.play('agnes_walk', true);
-        } else {
-            this.body.setVelocityX(0);
-            play.player.anims.play('agnes_idle', true);
+        if (!cutscene) {
+            if (this.keyA.isDown) {
+                this.body.setVelocityX(-this.playerSpeed);
+                this.flipX = true;
+                play.player.anims.play('agnes_walk', true);
+                return true;
+            } else if (this.keyD.isDown) {
+                this.body.setVelocityX(this.playerSpeed);
+                this.flipX = false;
+                play.player.anims.play('agnes_walk', true);
+                return true;
+            } 
         }
+
+        return false;
     }
 
     jumpUpdate() {
