@@ -1,5 +1,5 @@
 class TextBubble extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, frame, scale, fulltext, depth, status, flipX, callback) {
+    constructor(scene, x, y, texture, frame, scale, fulltext, depth, flipX, callback) {
         super(scene, x, y, texture, frame, scale);
 
         scene.add.existing(this);
@@ -9,7 +9,6 @@ class TextBubble extends Phaser.GameObjects.Sprite {
         this.originalScale = scale;
         this.depth = depth;
         this.callback = callback;
-        this.status = status;
         this.flipX = flipX;
 
         this.timer = 0;
@@ -23,64 +22,46 @@ class TextBubble extends Phaser.GameObjects.Sprite {
 
         this.speech = scene.add.text(this.x - 71*rescale, this.y - 27.5*rescale, '', { fontFamily: 'mxfont', fontSize: 6.7*rescale, align: 'left', wordWrap: { width: 56.5*rescale, useAdvancedWrap: false } }).setDepth(depth+0.5);
 
+        // make Interactive
+        this.setInteractive();
+
+        // On click, delete
+        this.on('pointerdown', () => {
+            if (this.speech.text.length < this.fulltext.length) {
+                this.speech.text = this.fulltext;
+            } else {
+                this.delete(this.status);
+            }
+        });
+
         conversations.push(this);
     }
 
     update() {
-        if (this.timer >= this.cooldown) {
-            if (this.speech.text.length < this.fulltext.length) {
-                this.speech.text += this.fulltext[this.speech.text.length];
-                if (this.speech.text[this.speech.text.length-1] === '.' || this.speech.text[this.speech.text.length-1] === '?' || this.speech.text[this.speech.text.length-1] === '!' || this.speech.text[this.speech.text.length-1] === ',' && this.fulltext[this.speech.text.length] === ' ') {
-                    this.cooldown = 7.5;
-                } else {
-                    this.cooldown = 1;
-                }
+        if (!this.destroyed) {
+            if (this.timer >= this.cooldown) {
+                if (this.speech.text.length < this.fulltext.length) {
+                    this.speech.text += this.fulltext[this.speech.text.length];
+                    if (this.speech.text[this.speech.text.length-1] === '.' || this.speech.text[this.speech.text.length-1] === '?' || this.speech.text[this.speech.text.length-1] === '!' || this.speech.text[this.speech.text.length-1] === ',' && this.fulltext[this.speech.text.length] === ' ') {
+                        this.cooldown = 7.5;
+                    } else {
+                        this.cooldown = 1;
+                    }
+                    this.timer = 0;
+                } 
                 this.timer = 0;
             } else {
-                // wait 1 second
-                if (!this.destroyed) {
-                    this.destroyed = true;
-                    this.delete(this.status);
-                }
+                this.timer+= 0.5;
             }
-            this.timer = 0;
-        } else {
-            this.timer+= 0.5;
         }
     }
 
-    delete(status) {
-        if (status === 1) {
-            this.scene.time.delayedCall(2000, () => {
-                conversations.splice(conversations.indexOf(this), 1);
-                // fade out
-                this.scene.tweens.add({
-                    targets: [this.speech, this],
-                    alpha: 0,
-                    duration: 300,
-                    ease: 'Linear',
-                    onComplete: () => {
-                        this.callback();
-                        this.speech.destroy();
-                        this.destroy();
-                    }
-                });
-            }, null, this);
-        } else if (status === 2) {
-            this.scene.time.delayedCall(1000, () => {
-                conversations.splice(conversations.indexOf(this), 1);
-                this.callback();
-                this.speech.destroy();
-                this.destroy();
-            }, null, this);
-        } else {
-            this.scene.time.delayedCall(300, () => {
-                conversations.splice(conversations.indexOf(this), 1);
-                this.callback();
-                this.speech.destroy();
-                this.destroy();
-            }, null, this);
-        }
+    delete() {
+        this.destroyed = true;
+        conversations.splice(conversations.indexOf(this), 1);
+        this.callback();
+        this.speech.destroy();
+        this.destroy();
     }
 
 }

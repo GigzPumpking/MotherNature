@@ -7,7 +7,7 @@ class Button extends Phaser.GameObjects.Sprite {
         this.scale = scale;
         this.texture1 = texture;
         this.texture2 = texture2;
-        this.initialScale = scale;
+        this.setOrigin(0, 0.5);
 
         this
             .setInteractive()
@@ -22,11 +22,11 @@ class Button extends Phaser.GameObjects.Sprite {
 
     pointerOn() {
         this.setTexture(this.texture2);
-        this.setScale(this.initialScale * 1.1);
+        this.arrow = this.scene.add.sprite(this.x - 4*rescale, this.y, 'arrow').setScale(rescale);
     }
 
     pointerOut() {
         this.setTexture(this.texture1);
-        this.setScale(this.initialScale);
+        this.arrow.destroy();
     }
 }

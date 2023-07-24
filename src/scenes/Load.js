@@ -13,6 +13,7 @@ class Load extends Phaser.Scene {
         this.load.image('startHover', 'yellow_start.png');
         this.load.image('controls', 'controls.png');
         this.load.image('controlsHover', 'yellow_controls.png');
+        this.load.image('arrow', 'arrow.png');
 
         // environmentAssets
         this.load.path = 'assets/environment/';

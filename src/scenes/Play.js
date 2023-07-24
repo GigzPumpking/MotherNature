@@ -4,6 +4,8 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        conversations = [];
+
         // Current and Previous Scene
         currScene = play;
         prevScene = title;
@@ -50,7 +52,7 @@ class Play extends Phaser.Scene {
 
         this.agnesHouse();
 
-        this.tortoiseHouse();
+        this.createTortoiseHouse();
 
         this.mapLength = map.widthInPixels * rescale;
     }
@@ -72,7 +74,7 @@ class Play extends Phaser.Scene {
         this.rock = this.add.sprite(centerX/2 + 60*rescale, centerY + 50*rescale, 'rock').setScale(rescale);
     }
 
-    tortoiseHouse() {
+    createTortoiseHouse() {
         this.tortoiseHouse = this.add.sprite(centerX + 600*rescale, centerY + 5*rescale, 'tortoiseHouse').setScale(rescale);
         this.tortoiseHouseBase = this.add.sprite(centerX + 600*rescale, centerY + 5*rescale, 'tortoiseHouseBase').setScale(rescale);
         this.tortoiseHousePillar = this.add.sprite(centerX + 600*rescale, centerY + 5*rescale, 'tortoiseHousePillars').setScale(rescale);
@@ -132,10 +134,6 @@ class Play extends Phaser.Scene {
     }
 
     createTextBubble(speaker, text, depth, status, flipX, callback) {
-        // Status: 0 = continue, 1 = stop (fade out), 2 = pause + continue
-
-        // 0 is for continuing a sentence, 1 is for conversation end, 2 is for ending a sentence and continuing the conversation
-
         let x, y;
         if (speaker === this.player) {
             x = this.player.x + 90*rescale;
@@ -156,7 +154,7 @@ class Play extends Phaser.Scene {
         this.blackScreen = this.add.rectangle(centerX, centerY, w, h + 20*rescale, 0x000000, 1).setOrigin(0.5).setDepth(4);
 
         this.time.delayedCall(700, () => {     
-            this.createTextBubble(this.lamby, "Agnes! Agnes wake up!! What happened?!", 5, 1, true, () => {
+            this.createTextBubble(this.lamby, "Agnes! Agnes wake up!! What happened?!", 5, true, () => {
                 this.time.delayedCall(1000, () => {
                     this.tweens.add({
                         targets: this.blackScreen,
@@ -165,13 +163,13 @@ class Play extends Phaser.Scene {
                         ease: 'Linear',
                         onComplete: () => {
                             this.blackScreen.destroy();
-                            this.createTextBubble(this.lamby, "I can't believe you walked out", 3, 0, true, () => {
-                            this.createTextBubble(this.lamby, "into the blizzard like that! ", 3, 2, true, () => {
-                            this.createTextBubble(this.lamby, "Come back inside. ", 3, 2, true, () => {
-                            this.createTextBubble(this.lamby, "You should just wait at the house", 3, 0, true, () => {
-                            this.createTextBubble(this.lamby, "like your mother told you to! ", 3, 2, true, () => {
-                            this.createTextBubble(this.lamby, "She's probably still looking for help out there!",  3, 2, true, () => {
-                            this.createTextBubble(this.player, "No, I have to find her. She could be hurt.",  3, 1, true, () => {
+                            this.createTextBubble(this.lamby, "I can't believe you walked out", 3, true, () => {
+                            this.createTextBubble(this.lamby, "into the blizzard like that! ", 3, true, () => {
+                            this.createTextBubble(this.lamby, "Come back inside. ", 3, true, () => {
+                            this.createTextBubble(this.lamby, "You should just wait at the house", 3, true, () => {
+                            this.createTextBubble(this.lamby, "like your mother told you to! ", 3, true, () => {
+                            this.createTextBubble(this.lamby, "She's probably still looking for help out there!", 3, true, () => {
+                            this.createTextBubble(this.player, "No, I have to find her. She could be hurt.",  3, true, () => {
                             this.time.delayedCall(1000, () => {
                             this.tweens.add({
                                 targets: this.shadow,
@@ -180,16 +178,16 @@ class Play extends Phaser.Scene {
                                 ease: 'Linear',
                                 onComplete: () => {
                                     this.shadow.destroy();
-                            this.createTextBubble(this.player, "What was that?! Did you see that thing, Lamby?", 3, 2, true, () => {
-                            this.createTextBubble(this.lamby, "What in the world are you talking about?", 3, 2, true, () => {
-                            this.createTextBubble(this.lamby, "Jeez, that rock really messed you up, huh?", 3, 1, true, () => {
-                            this.createTextBubble(this.player, "You really didn't see that?", 3, 2, true, () => {
-                            this.createTextBubble(this.player, "Well, whatever, I just need to find mom.", 3, 2, true, () => {
-                            this.createTextBubble(this.lamby, "Uhhhh okay, but I really think you should just stay here.", 3, 2, true, () => {
-                            this.createTextBubble(this.lamby, "She said she's going to come back.", 3, 2, true, () => {
-                            this.createTextBubble(this.player, "I've waited too long, I have to try looking.", 3, 2, true, () => {
-                            this.createTextBubble(this.lamby, "Fine, I'll just wait here then because I know she'll be back.", 3, 2, true, () => {
-                            this.createTextBubble(this.player, "Okay then, bye Lamby…", 3, 1, true, () => {
+                            this.createTextBubble(this.player, "What was that?! Did you see that thing, Lamby?", 3, true, () => {
+                            this.createTextBubble(this.lamby, "What in the world are you talking about?", 3, true, () => {
+                            this.createTextBubble(this.lamby, "Jeez, that rock really messed you up, huh?", 3, true, () => {
+                            this.createTextBubble(this.player, "You really didn't see that?", 3, true, () => {
+                            this.createTextBubble(this.player, "Well, whatever, I just need to find mom.", 3, true, () => {
+                            this.createTextBubble(this.lamby, "Uhhhh okay, but I really think you should just stay here.", 3, true, () => {
+                            this.createTextBubble(this.lamby, "She said she's going to come back.", 3, true, () => {
+                            this.createTextBubble(this.player, "I've waited too long, I have to try looking.", 3, true, () => {
+                            this.createTextBubble(this.lamby, "Fine, I'll just wait here then because I know she'll be back.", 3, true, () => {
+                            this.createTextBubble(this.player, "Okay then, bye Lamby…", 3, true, () => {
                                 cutscene = false;
         
         }); }); }); }); }); }); }); }); }); }); }}); }); }); }); }); }); }); }); }); }}); }); }); });

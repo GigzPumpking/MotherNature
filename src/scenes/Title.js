@@ -15,22 +15,20 @@ class Title extends Phaser.Scene {
 
         // Temporary Text Title, replace with commented out sprite below when assets available
 
-        this.title = this.add.text(centerX, centerY - 25*rescale, 'MOTHER NATURE', titleConfig).setOrigin(0.5).setFontSize(18*rescale);
+        this.title = this.add.text(centerX, centerY - 35*rescale, "She'll Come Back", titleConfig).setOrigin(0.5).setFontSize(18*rescale);
         /* = this.add.sprite(centerX, centerY - 25*rescale, 'TITLE').setScale(rescale) */;
 
         jiggle(this, this.title);
 
-        // Temporary Text Buttons, replace with commented out sprites when assets available
-
-        this.controlsButton = new Button(this, centerX - 50*rescale, centerY + 35*rescale, 'controls', 'controlsHover', rescale, () => {
+        this.controlsButton = new Button(this, centerX - 16*rescale, centerY + 10*rescale, 'controls', 'controlsHover', rescale, () => {
             this.scene.pause().launch(controls);
         });
 
-        this.optionsButton = new Button(this, centerX + 50*rescale, centerY + 35*rescale, 'options', 'optionsHover', rescale, () => {
+        this.optionsButton = new Button(this, centerX - 13*rescale, centerY, 'options', 'optionsHover', rescale, () => {
             this.scene.pause().launch(options);
         });
 
-        this.startButton = new Button(this, centerX, centerY + 18*rescale, 'start', 'startHover', rescale, () => {
+        this.startButton = new Button(this, centerX - 9.5*rescale, centerY - 10*rescale, 'start', 'startHover', rescale, () => {
             this.scene.start(play);
         }); 
 
