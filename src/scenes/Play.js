@@ -188,7 +188,7 @@ class Play extends Phaser.Scene {
                             this.createTextBubble(this.lamby, "Uhhhh okay, but I really think you should just stay here.", 3, 2, true, () => {
                             this.createTextBubble(this.lamby, "She said she's going to come back.", 3, 2, true, () => {
                             this.createTextBubble(this.player, "I've waited too long, I have to try looking.", 3, 2, true, () => {
-                            this.createTextBubble(this.lamby, "Fine, I'll just wait here then because I know she'll be back.", 3, 2, true, () => {
+                            this.createTextBubble(this.lamby, "Fine, I'll just wait here since I know she'll come back.", 3, 2, true, () => {
                             this.createTextBubble(this.player, "Okay then, bye Lamby…", 3, 1, true, () => {
                                 cutscene = false;
         
