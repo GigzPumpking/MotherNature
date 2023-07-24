@@ -9,7 +9,6 @@ class NPC extends Phaser.GameObjects.Sprite {
         this.scale = scale;
 
         this.body.setCollideWorldBounds(true);
-        this.body.setGravityY(400);
         this.body.setDragX(1000);
 
         this.followingPlayer = followingPlayer;
@@ -28,11 +27,15 @@ class NPC extends Phaser.GameObjects.Sprite {
         if (this.x < this.player.x - 25*rescale) {
             this.body.setVelocityX(this.player.playerSpeed*0.9);
             this.flipX = false;
-            //this.anims.play('lamby_walk', true);
+            if (this.anims.currentAnim != null && this.anims.currentAnim.key != 'lamby_walk') {
+                this.anims.play('lamby_walk', true);
+            }
         } else if (this.x > this.player.x + 25*rescale) {
             this.body.setVelocityX(-this.player.playerSpeed*0.9);
             this.flipX = true;
-            //this.anims.play('lamby_walk', true);
+            if (this.anims.currentAnim != null && this.anims.currentAnim.key != 'lamby_walk') {
+                this.anims.play('lamby_walk', true);
+            }
         } else {
             this.body.setVelocityX(0);
             this.anims.play('lamby_idle', true);

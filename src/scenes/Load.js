@@ -4,18 +4,6 @@ class Load extends Phaser.Scene {
     }
 
     preload() {
-        // loading bar
-        // See: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/loader/
-        let loadingBar = this.add.graphics();
-        this.load.on('progress', (value) => {
-            loadingBar.clear();                                 // reset fill/line style
-            loadingBar.fillStyle(0xFFFFFF, 1);                  // (color, alpha)
-            loadingBar.fillRect(0, centerY, w * value, 5);  // (x, y, w, h)
-        });
-        this.load.on('complete', () => {
-            loadingBar.destroy();
-        });
-
         // tempAssets
         this.load.path = 'assets/tempAssets/';
         this.load.image('cigbox', 'cigbox.png');
@@ -29,6 +17,7 @@ class Load extends Phaser.Scene {
         this.load.image('treestack', 'repeatableTrees.png');
         this.load.image('house', 'agnes_house.png');
         this.load.image('rock', 'rock.png');
+        this.load.image('textBubble', 'text_bubble.png');
 
         // characterAssets
         this.load.path = 'assets/characters/';
@@ -44,6 +33,8 @@ class Load extends Phaser.Scene {
         this.load.spritesheet('agnesIdle', 'agnes_idle.png', { frameWidth: 20, frameHeight: 28, startFrame: 0, endFrame: 2 });
         this.load.spritesheet('agnesWalk', 'agnes_walk.png', { frameWidth: 20, frameHeight: 29, startFrame: 0, endFrame: 5 });
         this.load.spritesheet('lambyIdle', 'lamby_idle.png', { frameWidth: 21, frameHeight: 31, startFrame: 0, endFrame: 2 });
+        this.load.spritesheet('lambyWalk', 'lamby_walk.png', { frameWidth: 21, frameHeight: 32, startFrame: 0, endFrame: 5 });
+
 
         // tortoiseHouse Assets
         this.load.path = 'assets/environment/tortoiseHouse/';
@@ -62,6 +53,18 @@ class Load extends Phaser.Scene {
         this.load.image('guitarBG', 'minigame_bg.png');
         this.load.image('slice', 'slice.png');
         this.load.image('nigel_shadow', 'nigel_shadow.png');
+
+        // loading bar
+        // See: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/loader/
+        let loadingBar = this.add.graphics();
+        this.load.on('progress', (value) => {
+            loadingBar.clear();                                 // reset fill/line style
+            loadingBar.fillStyle(0xFFFFFF, 1);                  // (color, alpha)
+            loadingBar.fillRect(0, centerY, w * value, 5);  // (x, y, w, h)
+        });
+        this.load.on('complete', () => {
+            loadingBar.destroy();
+        });
     }
 
     create() {
@@ -104,6 +107,13 @@ class Load extends Phaser.Scene {
         play.anims.create({
             key: 'lamby_idle',
             frames: this.anims.generateFrameNumbers('lambyIdle', { start: 0, end: 2, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        play.anims.create({
+            key: 'lamby_walk',
+            frames: this.anims.generateFrameNumbers('lambyWalk', { start: 0, end: 5, first: 0}),
             frameRate: 10,
             repeat: -1
         });
