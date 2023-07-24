@@ -36,7 +36,7 @@ class Options extends Phaser.Scene {
                     if (song.isPlaying || song.isPaused) song.stop();
                 })
 
-                this.scene.stop(currScene).stop(ui).start(currScene).start(ui).stop();
+                this.scene.stop(currScene).stop(ui).start(play).stop();
             })
 
             /* new ButtonR(this, centerX - 1.5*rescale, centerY + 4.5*rescale, 'restartButton', rescale, () => {
@@ -96,7 +96,7 @@ class Options extends Phaser.Scene {
                     if (song.isPlaying || song.isPaused) song.stop();
                 })
     
-                this.scene.stop(currScene).stop(ui).start(currScene).start(ui).stop();
+                this.scene.stop(currScene).stop(ui).start(play).stop();
             }
     
             if (Phaser.Input.Keyboard.JustDown(this.keyM)) {
