@@ -19,11 +19,14 @@ let config = {
 
 var fontStyle = {
     fontFamily: 'mxfont', // This will be used to reference the font later
-    src: 'url("./assets/detmonowebr.ttf")' // The URL to your TTF font file
+    // adjust width and height accordingly
+    src: 'url("./assets/DeterminationMonoWebRegular-Z5oq.ttf")' // The URL to your TTF font file
 };
 
 let game = new Phaser.Game(config);
 let map = null;
+
+let cutscene = false;
 
 let w = game.config.width;
 let h = game.config.height;
@@ -104,3 +107,7 @@ let brightness = 1;
 // Inventory
 
 let inventory = [];
+
+// Texts
+
+let conversations = [];
