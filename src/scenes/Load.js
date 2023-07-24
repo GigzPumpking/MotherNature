@@ -38,10 +38,13 @@ class Load extends Phaser.Scene {
         this.load.spritesheet('abbyIdle', 'abby_idle.png', { frameWidth: 21, frameHeight: 29, startFrame: 0, endFrame: 6 });
         this.load.spritesheet('agnesIdle', 'agnes_idle.png', { frameWidth: 20, frameHeight: 28, startFrame: 0, endFrame: 2 });
         this.load.spritesheet('agnesWalk', 'agnes_walk.png', { frameWidth: 20, frameHeight: 29, startFrame: 0, endFrame: 5 });
+        this.load.spritesheet('agnesTrip', 'agnes_trip.png', { frameWidth: 57, frameHeight: 33, startFrame: 0, endFrame: 15 });
         this.load.spritesheet('lambyIdle', 'lamby_idle.png', { frameWidth: 21, frameHeight: 31, startFrame: 0, endFrame: 2 });
         this.load.spritesheet('lambyWalk', 'lamby_walk.png', { frameWidth: 21, frameHeight: 32, startFrame: 0, endFrame: 5 });
         this.load.spritesheet('shadowIdle', 'shadow_idle.png', { frameWidth: 23, frameHeight: 40, startFrame: 0, endFrame: 2 });
         this.load.spritesheet('shadowWalk', 'shadow_walkt.png', { frameWidth: 23, frameHeight: 42, startFrame: 0, endFrame: 6 });
+        this.load.spritesheet('nigelIdle', 'nigel_idle.png', { frameWidth: 24, frameHeight: 31, startFrame: 0, endFrame: 4 });
+        this.load.spritesheet('nigelWalk', 'nigel_walk.png', { frameWidth: 24, frameHeight: 31, startFrame: 0, endFrame: 7 });
 
 
         // tortoiseHouse Assets
@@ -61,6 +64,8 @@ class Load extends Phaser.Scene {
         this.load.image('guitarBG', 'minigame_bg.png');
         this.load.image('slice', 'slice.png');
         this.load.image('nigel_shadow', 'nigel_shadow.png');
+        this.load.image('abby_guitar', 'abby_guitar.png');
+        this.load.image('agnes_guitar', 'agnes_guitar.png');
 
         // loading bar
         // See: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/loader/
@@ -113,6 +118,13 @@ class Load extends Phaser.Scene {
         });
 
         play.anims.create({
+            key: 'agnes_trip',
+            frames: this.anims.generateFrameNumbers('agnesTrip', { start: 0, end: 15, first: 0}),
+            frameRate: 10,
+            repeat: 0
+        });
+
+        play.anims.create({
             key: 'lamby_idle',
             frames: this.anims.generateFrameNumbers('lambyIdle', { start: 0, end: 2, first: 0}),
             frameRate: 10,
@@ -136,6 +148,20 @@ class Load extends Phaser.Scene {
         play.anims.create({
             key: 'shadow_walk',
             frames: this.anims.generateFrameNumbers('shadowWalk', { start: 0, end: 6, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        play.anims.create({
+            key: 'nigel_idle',
+            frames: this.anims.generateFrameNumbers('nigelIdle', { start: 0, end: 4, first: 0}),
+            frameRate: 6.66,
+            repeat: -1
+        });
+
+        play.anims.create({
+            key: 'nigel_walk',
+            frames: this.anims.generateFrameNumbers('nigelWalk', { start: 0, end: 7, first: 0}),
             frameRate: 10,
             repeat: -1
         });

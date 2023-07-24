@@ -22,19 +22,21 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        this.camera.startFollow(this.player, true, 0.25, 0.25);
+        if (!cutscene) this.camera.startFollow(this.player, true, 0.25, 0.25);
 
         updateCurrPrev(play, title);
 
         // Update characters
-        this.player.update();
-        this.lamby.update();
+        if (!cutscene) {
+            this.player.update();
+            this.lamby.update();
+        }
 
         for (let i = 0; i < conversations.length; i++) {
             conversations[i].update();
         }
 
-        if (this.player.x > centerX + 600*rescale && !cutscenes[1]) {
+        if (this.player.x > centerX + 450*rescale && !cutscenes[1]) {
             this.cutsceneTwo();
         }
     }
@@ -71,7 +73,7 @@ class Play extends Phaser.Scene {
     agnesHouse() {
         this.house = this.add.sprite(centerX/2 - 20*rescale, centerY, 'house').setScale(rescale);
         this.snowlump = this.add.sprite(centerX/2 + 25*rescale, centerY + 50*rescale, 'snowLump').setScale(rescale);
-        this.rock = this.add.sprite(centerX/2 + 60*rescale, centerY + 50*rescale, 'rock').setScale(rescale);
+        this.rock = this.add.sprite(centerX/2 + 90*rescale, centerY + 55*rescale, 'rock').setScale(rescale);
     }
 
     createTortoiseHouse() {
@@ -84,25 +86,28 @@ class Play extends Phaser.Scene {
 
     createCharacters() {
         // Add Player
-        this.player = new Player(this, centerX/2, 102*rescale, 'agnes', 0, rescale).setOrigin(0.5, 0).setDepth(2);
-        this.player.flipX = true;
+        this.player = new Player(this, centerX - 50*rescale, 102*rescale, 'agnes', 0, rescale).setOrigin(0.5, 0).setDepth(2);
+        this.camera.startFollow(this.player, true, 0.25, 0.25);
 
         // Add Abby
-        this.abby = new NPC(this, centerX/2 + 600*rescale, centerY + 65*rescale, 'abby', 0, rescale, false).setOrigin(0.5, 1);
+        this.abby = new NPC(this, centerX/2 + 600*rescale, centerY + 65*rescale, 'abby', 0, rescale, this.player).setOrigin(0.5, 1);
         this.abby.flipX = true;
         this.abby.anims.play('abby_idle');
 
-        // Add Tortoise
-        this.tortoise = new NPC(this, centerX/2 + 700*rescale, centerY + 30*rescale, 'tortoise', 0, rescale, false).setOrigin(0.5, 0);
-        this.tortoise.flipX = true;
+        this.abbyGuitar = this.add.sprite(this.abby.x - 5*rescale, this.abby.y + 5*rescale, 'abby_guitar').setScale(rescale).setOrigin(0.5, 1).setDepth(1);
+
+        // Add Nigel
+        this.nigel = new NPC(this, centerX/2 + 640*rescale, centerY + 30*rescale, 'tortoise', 0, rescale, this.player).setOrigin(0.5, 0);
+        this.nigel.flipX = true;
+        this.nigel.anims.play('nigel_idle');
 
         // Add Lamby
-
-        this.lamby = new NPC(this, 35*rescale, 130*rescale, 'lamby', 0, rescale, false).setOrigin(0.5, 1);
-        //this.lamby.flipX = true;
+        this.lamby = new NPC(this, centerX + 20*rescale, 130*rescale, 'lamby', 0, rescale, this.player).setOrigin(0.5, 1);
+        this.lamby.flipX = true;
         this.lamby.anims.play('lamby_idle');
+        this.lamby.setAlpha(0);
 
-        this.shadow = new NPC(this, -15*rescale, 130*rescale, 'shadow', 0, rescale, false).setOrigin(0.5, 1).setDepth(3);
+        this.shadow = new NPC(this, -15*rescale, 130*rescale, 'shadow', 0, rescale, null).setOrigin(0.5, 1).setDepth(3);
         this.shadow.anims.play('shadow_walk');
 
         // Add invisible floor collision
@@ -112,7 +117,7 @@ class Play extends Phaser.Scene {
         // Set collision for floor
         this.physics.add.collider(this.player, this.floor);
         this.physics.add.collider(this.abby, this.floor);
-        this.physics.add.collider(this.tortoise, this.floor);
+        this.physics.add.collider(this.nigel, this.floor);
         this.physics.add.collider(this.lamby, this.floor);
 
         this.player.on('animationupdate', this.onAnimationUpdate, this);
@@ -131,17 +136,38 @@ class Play extends Phaser.Scene {
                 pauseForDuration(play, animation, 100);
             }
         }
+
+        if (animation.key === 'agnes_trip' && frame.index === 9) {
+            // tween rock 5 rescale right
+            this.tweens.add({
+                targets: this.rock,
+                x: this.rock.x + 5*rescale,
+                duration: 1000,
+                ease: 'Power2'
+            });
+        } 
     }
 
     createTextBubble(speaker, text, depth, status, flipX, callback) {
         let x, y;
         if (speaker === this.player) {
-            x = this.player.x + 90*rescale;
+            if (flipX) x = this.player.x;
+            else x = this.player.x + 90*rescale;
             y = this.player.y + 9.5*rescale;
         } else if (speaker === this.lamby) {
-            x = this.lamby.x + 92*rescale;
+            if (flipX) x = this.lamby.x + 92*rescale;
+            else x = this.lamby.x;
             y = this.lamby.y - 20*rescale;
+        } else if (speaker === this.abby) {
+            if (flipX) x = this.abby.x;
+            else x = this.abby.x + 92*rescale;
+            y = this.abby.y - 20*rescale;
+        } else if (speaker === this.nigel) {
+            if (flipX) x = this.nigel.x;
+            else x = this.nigel.x + 92*rescale;
+            y = this.nigel.y;
         }
+
         new TextBubble(this, x, y, 'textBubble', 0, rescale, text, depth, status, flipX, () => {
             callback();
         });
@@ -151,9 +177,41 @@ class Play extends Phaser.Scene {
         cutscene = true;
         cutscenes[0] = true;
 
-        this.blackScreen = this.add.rectangle(centerX, centerY, w, h + 20*rescale, 0x000000, 1).setOrigin(0.5).setDepth(4);
+        this.player.anims.play('agnes_idle');
 
-        this.time.delayedCall(700, () => {     
+        // wait 2 seconds
+        this.time.delayedCall(2000, () => {
+
+        this.player.anims.play('agnes_walk');
+        this.tweens.add({
+            targets: this.player,
+            x: centerX - 15*rescale,
+            duration: 1500,
+            ease: 'Linear',
+            onComplete: () => {
+        this.player.x += 16.5*rescale;
+        this.player.y -= 2*rescale;
+        this.player.anims.play('agnes_trip');
+
+        // on trip animation complete
+        this.player.on('animationcomplete', () => {
+
+        this.blackScreen = this.add.rectangle(centerX, centerY, w, h + 20*rescale, 0x000000).setOrigin(0.5).setDepth(4).setAlpha(0);
+
+        // fade in black screen
+        this.tweens.add({
+            targets: this.blackScreen,
+            alpha: 1,
+            duration: 1000,
+            ease: 'Linear',
+            onComplete: () => {
+
+        this.player.x -= 16.5*rescale;
+        this.player.y += 2*rescale;
+        this.player.anims.play('agnes_idle');
+        this.lamby.setAlpha(1);
+
+        this.time.delayedCall(3000, () => {     
             this.createTextBubble(this.lamby, "Agnes! Agnes wake up!! What happened?!", 5, true, () => {
                 this.time.delayedCall(1000, () => {
                     this.tweens.add({
@@ -169,7 +227,7 @@ class Play extends Phaser.Scene {
                             this.createTextBubble(this.lamby, "You should just wait at the house", 3, true, () => {
                             this.createTextBubble(this.lamby, "like your mother told you to! ", 3, true, () => {
                             this.createTextBubble(this.lamby, "She's probably still looking for help out there!", 3, true, () => {
-                            this.createTextBubble(this.player, "No, I have to find her. She could be hurt.",  3, true, () => {
+                            this.createTextBubble(this.player, "No, I have to find her. She could be hurt.",  3, false, () => {
                             this.time.delayedCall(1000, () => {
                             this.tweens.add({
                                 targets: this.shadow,
@@ -178,23 +236,58 @@ class Play extends Phaser.Scene {
                                 ease: 'Linear',
                                 onComplete: () => {
                                     this.shadow.destroy();
-                            this.createTextBubble(this.player, "What was that?! Did you see that thing, Lamby?", 3, true, () => {
+                            this.createTextBubble(this.player, "What was that?! Did you see that thing, Lamby?", 3, false, () => {
                             this.createTextBubble(this.lamby, "What in the world are you talking about?", 3, true, () => {
                             this.createTextBubble(this.lamby, "Jeez, that rock really messed you up, huh?", 3, true, () => {
-                            this.createTextBubble(this.player, "You really didn't see that?", 3, true, () => {
-                            this.createTextBubble(this.player, "Well, whatever, I just need to find mom.", 3, true, () => {
+                            this.createTextBubble(this.player, "You really didn't see that?", 3, false, () => {
+                            this.createTextBubble(this.player, "Well, whatever, I just need to find mom.", 3, false, () => {
                             this.createTextBubble(this.lamby, "Uhhhh okay, but I really think you should just stay here.", 3, true, () => {
                             this.createTextBubble(this.lamby, "She said she's going to come back.", 3, true, () => {
                             this.createTextBubble(this.player, "I've waited too long, I have to try looking.", 3, true, () => {
                             this.createTextBubble(this.lamby, "Fine, I'll just wait here then, since I know she'll be back.", 3, true, () => {
                             this.createTextBubble(this.player, "Okay then, bye Lamby…", 3, true, () => {
                                 cutscene = false;
+                                ui.cinematicViewExit();
+
         
-        }); }); }); }); }); }); }); }); }); }); }}); }); }); }); }); }); }); }); }); }}); }); }); });
+        }); }); }); }); }); }); }); }); }); }); }}); }); }); }); }); }); }); }); }); }}); }); }); }); }}); }); }}); });
     }
 
     cutsceneTwo() {
         cutscene = true;
         cutscenes[1] = true;
+        ui.cinematicViewEnter();
+        this.player.anims.play('agnes_idle');
+        // pan camera to Abby
+        this.camera.startFollow(this.abby, true, 0.25, 0.25);
+
+        this.time.delayedCall(700, () => {
+            this.createTextBubble(this.abby, "This guitar is awesome!!", 3, false, () => {
+            this.createTextBubble(this.abby, "I can't believe it just fell out of the sky! Hehehe...", 3, false, () => {
+            this.createTextBubble(this.nigel, "Throw that #%!@ out!", 3, false, () => {
+            this.createTextBubble(this.nigel, "It's just another piece of trash on this planet!", 3, false, () => {
+            this.createTextBubble(this.abby, "Oh Pa, please don't be so grouchy…", 3, false, () => {
+            this.createTextBubble(this.nigel, "I'm going inside.", 3, false, () => {
+                this.nigel.flipX = false;
+                this.nigel.anims.play('nigel_walk');
+                //tween nigel to the door
+                this.tweens.add({
+                    targets: this.nigel,
+                    x: this.nigel.x + 20*rescale,
+                    duration: 1500,
+                    ease: 'Linear',
+                    onComplete: () => {
+                        this.nigel.anims.play('nigel_idle');
+                        // fade nigels alpha
+                        this.tweens.add({
+                            targets: this.nigel,
+                            alpha: 0,
+                            duration: 1000,
+                            ease: 'Linear',
+                        });
+    
+                
+                
+        }}); }); }); }); }); }); }); });
     }
 }

@@ -9,23 +9,17 @@ class Player extends Phaser.GameObjects.Sprite {
         this.scale = scale;
 
         this.body.setCollideWorldBounds(true);
-        this.body.setGravityY(800);
         this.body.setDragX(1000);
 
         this.playerSpeed = 200;
-        this.isGrounded = false;
 
         this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyS = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        this.keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
     update() {
-        if (!cutscene) {
-            this.jumpUpdate();
-        }
 
         if (!this.sideScrollerMovement()) {
             play.player.anims.play('agnes_idle', true);
@@ -48,13 +42,5 @@ class Player extends Phaser.GameObjects.Sprite {
         }
 
         return false;
-    }
-
-    jumpUpdate() {
-        this.isGrounded = this.body.blocked.down;
-
-        if ((this.keyW.isDown || this.keySPACE.isDown) && this.isGrounded) {
-            this.body.setVelocityY(-200);
-        }
     }
 }
