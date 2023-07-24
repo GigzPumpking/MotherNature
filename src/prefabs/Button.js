@@ -1,14 +1,14 @@
-// Note: This is a BASE class for a GAME OBJECT button. Do NOT use this class directly.
-
-// Modified from Button class code from Ferenc Almasi: https://webtips.dev/webtips/phaser/interactive-buttons-in-phaser3
 class Button extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, scale, callback) {
+    constructor(scene, x, y, texture, texture2, scale, callback) {
         super(scene, x, y, texture);
         scene.add.existing(this);
         this.scene = scene;
         this.callback = callback;
         this.scale = scale;
-        this.texture = texture;
+        this.texture1 = texture;
+        this.texture2 = texture2;
+        this.initialScale = scale;
+
         this
             .setInteractive()
             .on('pointerdown', () => this.pointerDown())
@@ -21,10 +21,12 @@ class Button extends Phaser.GameObjects.Sprite {
     }
 
     pointerOn() {
-
+        this.setTexture(this.texture2);
+        this.setScale(this.initialScale * 1.1);
     }
 
     pointerOut() {
-
+        this.setTexture(this.texture1);
+        this.setScale(this.initialScale);
     }
 }

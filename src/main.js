@@ -14,7 +14,7 @@ let config = {
             fps: 60
         }
     },
-    scene: [ Load, Title, Credits, Play, UI, Inventory, Music, Options ]
+    scene: [ Load, Title, Play, UI, Music, Options, Controls ]
 }
 
 var fontStyle = {
@@ -37,15 +37,6 @@ let centerY = h / 2;
 
 // UI Button Locations (Technically obsolete, since a separate UI scene is used)
 // Still used to determine the location of buttons
-
-backX = w - 10*rescale;
-backY = 5*rescale;
-
-optionsX = 12*rescale;
-optionsY = 6*rescale;
-
-inventoryX = 14*rescale;
-inventoryY = 12*rescale;
 
 // Default Text Config
 
@@ -80,7 +71,7 @@ creditsConfig.fontSize = 4.4*rescale;
 
 let load = null;
 let title = null;
-let credits = null;
+let controls = null;
 let options = null;
 let play = null;
 let ui = null;
@@ -111,3 +102,5 @@ let inventory = [];
 // Texts
 
 let conversations = [];
+
+let cutscenes = [false, false, false, false, false, false];

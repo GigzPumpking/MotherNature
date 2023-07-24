@@ -4,10 +4,15 @@ class Load extends Phaser.Scene {
     }
 
     preload() {
-        // tempAssets
-        this.load.path = 'assets/tempAssets/';
-        this.load.image('cigbox', 'cigbox.png');
-        this.load.image('silhouette', 'silhouette_3.png');
+        // menuAssets
+        this.load.path = 'assets/menu/';
+        this.load.image('menuBG', 'menu_bg.png');
+        this.load.image('options', 'options.png');
+        this.load.image('optionsHover', 'yellow_options.png');
+        this.load.image('start', 'start.png');
+        this.load.image('startHover', 'yellow_start.png');
+        this.load.image('controls', 'controls.png');
+        this.load.image('controlsHover', 'yellow_controls.png');
 
         // environmentAssets
         this.load.path = 'assets/environment/';
@@ -25,15 +30,17 @@ class Load extends Phaser.Scene {
         this.load.image('lamby', 'lamby_sprite.png');
         this.load.image('tortoise', 'tortoise_sprite.png');
         this.load.image('abby', 'abby_sprite.png');
+        this.load.image('shadow', 'shadow_sprite.png');
 
         // character animations
         this.load.path = 'assets/characters/animations/';
-        this.load.image('abby', 'abby_idle.png');
-        this.load.spritesheet('abbyIdle', 'abby_idle.png', { frameWidth: 24, frameHeight: 32, startFrame: 0, endFrame: 6 });
+        this.load.spritesheet('abbyIdle', 'abby_idle.png', { frameWidth: 21, frameHeight: 29, startFrame: 0, endFrame: 6 });
         this.load.spritesheet('agnesIdle', 'agnes_idle.png', { frameWidth: 20, frameHeight: 28, startFrame: 0, endFrame: 2 });
         this.load.spritesheet('agnesWalk', 'agnes_walk.png', { frameWidth: 20, frameHeight: 29, startFrame: 0, endFrame: 5 });
         this.load.spritesheet('lambyIdle', 'lamby_idle.png', { frameWidth: 21, frameHeight: 31, startFrame: 0, endFrame: 2 });
         this.load.spritesheet('lambyWalk', 'lamby_walk.png', { frameWidth: 21, frameHeight: 32, startFrame: 0, endFrame: 5 });
+        this.load.spritesheet('shadowIdle', 'shadow_idle.png', { frameWidth: 23, frameHeight: 40, startFrame: 0, endFrame: 2 });
+        this.load.spritesheet('shadowWalk', 'shadow_walkt.png', { frameWidth: 23, frameHeight: 42, startFrame: 0, endFrame: 6 });
 
 
         // tortoiseHouse Assets
@@ -73,7 +80,7 @@ class Load extends Phaser.Scene {
         load = this.scene.get('loadScene');
         title = this.scene.get('titleScene');
         options = this.scene.get('optionsScene');
-        credits = this.scene.get('creditScene');
+        controls = this.scene.get('controlsScene');
         play = this.scene.get('playScene');
         ui = this.scene.get('uiScene');
         inv = this.scene.get('inventoryScene');
@@ -86,7 +93,7 @@ class Load extends Phaser.Scene {
         play.anims.create({
             key: 'abby_idle',
             frames: this.anims.generateFrameNumbers('abbyIdle', { start: 0, end: 6, first: 0}),
-            frameRate: 10,
+            frameRate: 6.66,
             repeat: -1
         });
 
@@ -114,6 +121,20 @@ class Load extends Phaser.Scene {
         play.anims.create({
             key: 'lamby_walk',
             frames: this.anims.generateFrameNumbers('lambyWalk', { start: 0, end: 5, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        play.anims.create({
+            key: 'shadow_idle',
+            frames: this.anims.generateFrameNumbers('shadowIdle', { start: 0, end: 2, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        play.anims.create({
+            key: 'shadow_walk',
+            frames: this.anims.generateFrameNumbers('shadowWalk', { start: 0, end: 6, first: 0}),
             frameRate: 10,
             repeat: -1
         });

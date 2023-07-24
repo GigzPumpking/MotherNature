@@ -8,7 +8,6 @@ class NPC extends Phaser.GameObjects.Sprite {
         this.scene = scene;
         this.scale = scale;
 
-        this.body.setCollideWorldBounds(true);
         this.body.setDragX(1000);
 
         this.followingPlayer = followingPlayer;

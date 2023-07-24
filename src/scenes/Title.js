@@ -10,6 +10,9 @@ class Title extends Phaser.Scene {
         
         currScene = title;
 
+        // Create background
+        this.background = this.add.tileSprite(0, 0, w, h, 'menuBG').setOrigin(0, 0);
+
         // Temporary Text Title, replace with commented out sprite below when assets available
 
         this.title = this.add.text(centerX, centerY - 25*rescale, 'MOTHER NATURE', titleConfig).setOrigin(0.5).setFontSize(18*rescale);
@@ -19,29 +22,17 @@ class Title extends Phaser.Scene {
 
         // Temporary Text Buttons, replace with commented out sprites when assets available
 
-        this.creditsButton = new TextButton(this, centerX - 50*rescale, centerY + 35*rescale, 'CREDITS', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
-            this.scene.pause().launch(credits);
+        this.controlsButton = new Button(this, centerX - 50*rescale, centerY + 35*rescale, 'controls', 'controlsHover', rescale, () => {
+            this.scene.pause().launch(controls);
         });
-        
-        /* new ButtonR(this, centerX - 50*rescale, centerY + 35*rescale, 'CREDITS', rescale/1.5, () => {
-            this.scene.pause().launch('creditScene');
-        }); */
 
-        this.optionsButton = new TextButton(this, centerX + 50*rescale, centerY + 35*rescale, 'OPTIONS', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
+        this.optionsButton = new Button(this, centerX + 50*rescale, centerY + 35*rescale, 'options', 'optionsHover', rescale, () => {
             this.scene.pause().launch(options);
         });
-        
-        /* new ButtonR(this, centerX + 50*rescale, centerY + 35*rescale, 'OPTIONS', rescale/1.5, () => {
-            this.scene.pause().launch('optionsScene');
-        }); */
 
-        this.startButton = new TextButton(this, centerX, centerY + 18*rescale, 'START', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
+        this.startButton = new Button(this, centerX, centerY + 18*rescale, 'start', 'startHover', rescale, () => {
             this.scene.start(play);
-        });
-
-        /* new ButtonR(this, centerX, centerY + 18*rescale, 'START', rescale/1.25, () => {
-
-        }); */
+        }); 
 
         this.sound.stopAll();
 
@@ -53,7 +44,7 @@ class Title extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.keyC)) {
-            this.scene.pause().launch(credits);
+            this.scene.pause().launch(controls);
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.keyO)) {
