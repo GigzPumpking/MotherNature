@@ -196,7 +196,7 @@ class Play extends Phaser.Scene {
         // on trip animation complete
         this.player.on('animationcomplete', () => {
 
-        this.blackScreen = this.add.rectangle(centerX, centerY, w, h + 20*rescale, 0x000000).setOrigin(0.5).setDepth(4).setAlpha(0);
+        this.blackScreen = this.add.rectangle(centerX, centerY, w*1.5, h + 20*rescale, 0x000000).setOrigin(0.5).setDepth(4).setAlpha(0);
 
         // fade in black screen
         this.tweens.add({
