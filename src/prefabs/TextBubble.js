@@ -1,5 +1,5 @@
 class TextBubble extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, frame, scale, fulltext, speaker, depth, status, flipX, callback) {
+    constructor(scene, x, y, texture, frame, scale, fulltext, depth, status, flipX, callback) {
         super(scene, x, y, texture, frame, scale);
 
         scene.add.existing(this);
@@ -7,14 +7,13 @@ class TextBubble extends Phaser.GameObjects.Sprite {
         this.scene = scene;
         this.scale = scale;
         this.originalScale = scale;
-        this.speaker = speaker;
         this.depth = depth;
         this.callback = callback;
         this.status = status;
         this.flipX = flipX;
 
         this.timer = 0;
-        this.cooldown = 1.5;
+        this.cooldown = 1;
 
         // set origin
         this.setOrigin(1.2, 1);
@@ -28,15 +27,13 @@ class TextBubble extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        this.updatePosition();
-
-        if (this.timer > this.cooldown) {
+        if (this.timer >= this.cooldown) {
             if (this.speech.text.length < this.fulltext.length) {
                 this.speech.text += this.fulltext[this.speech.text.length];
-                if (this.speech.text[this.speech.text.length-1] === '.' || this.speech.text[this.speech.text.length-1] === '?' || this.speech.text[this.speech.text.length-1] === '!' && this.fulltext[this.speech.text.length] === ' ') {
+                if (this.speech.text[this.speech.text.length-1] === '.' || this.speech.text[this.speech.text.length-1] === '?' || this.speech.text[this.speech.text.length-1] === '!' || this.speech.text[this.speech.text.length-1] === ',' && this.fulltext[this.speech.text.length] === ' ') {
                     this.cooldown = 7.5;
                 } else {
-                    this.cooldown = 1.5;
+                    this.cooldown = 1;
                 }
                 this.timer = 0;
             } else {
@@ -50,15 +47,6 @@ class TextBubble extends Phaser.GameObjects.Sprite {
         } else {
             this.timer+= 0.5;
         }
-    }
-
-    updatePosition(x, y) {
-        if (this.speaker !== null) {
-            this.x = this.speaker.x;
-            this.y = this.speaker.y;
-        }
-        this.speech.x = this.x - 71*rescale;
-        this.speech.y = this.y - 27.5*rescale;
     }
 
     delete(status) {

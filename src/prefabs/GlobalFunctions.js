@@ -1,39 +1,3 @@
-function createBackButton(scene, stop, resume) {
-    scene.backButton = new TextButton(scene, backX, backY, 'Back', textConfig, () => {
-        scene.scene.stop(stop);
-        scene.scene.resume(resume);
-    });
-    
-    /* new ButtonR(scene, backX, backY, 'backButton', rescale, () => {
-        scene.scene.stop(stop);
-        scene.scene.resume(resume);
-    }); */
-}
-
-function createOptionsButton(scene) {
-    // Temporary Text Button, will be replaced with a sprite
-    
-    scene.optionsButton = new TextButton(scene, optionsX, optionsY, 'Options', textConfig, () => {
-        scene.scene.pause(currScene).pause().launch('optionsScene');
-    });
-
-    /* new ButtonR(scene, optionsX, optionsY, 'optionsButton', rescale, () => {
-        scene.scene.pause().launch('optionsScene');
-    }); */
-}
-
-function createInventoryButton(scene) {
-    // Temporary Text Button, will be replaced with a sprite
-    
-    scene.inventoryButton = new TextButton(scene, inventoryX, inventoryY, 'Inventory', textConfig, () => {
-        scene.scene.pause(currScene).pause().launch('inventoryScene');
-    });
-
-    /* new ButtonR(scene, optionsX, optionsY, 'optionsButton', rescale, () => {
-        scene.scene.pause().launch('optionsScene');
-    }); */
-}
-
 function updateCurrPrev(curr, prev) {
     if (currScene != curr) currScene = curr;
     if (prevScene != prev) prevScene = prev;

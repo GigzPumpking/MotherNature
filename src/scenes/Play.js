@@ -8,8 +8,6 @@ class Play extends Phaser.Scene {
         currScene = play;
         prevScene = title;
 
-        inventory = [];
-
         this.createMap();
 
         this.cameraInitialize();
@@ -17,6 +15,8 @@ class Play extends Phaser.Scene {
         this.createCharacters();
 
         this.cutsceneOne();
+
+        this.scene.launch(ui);
     }
 
     update() {
@@ -30,6 +30,10 @@ class Play extends Phaser.Scene {
 
         for (let i = 0; i < conversations.length; i++) {
             conversations[i].update();
+        }
+
+        if (this.player.x > centerX + 600*rescale && !cutscenes[1]) {
+            this.cutsceneTwo();
         }
     }
 
@@ -69,11 +73,11 @@ class Play extends Phaser.Scene {
     }
 
     tortoiseHouse() {
-        this.tortoiseHouse = this.add.sprite(centerX + 400*rescale, centerY + 5*rescale, 'tortoiseHouse').setScale(rescale);
-        this.tortoiseHouseBase = this.add.sprite(centerX + 400*rescale, centerY + 5*rescale, 'tortoiseHouseBase').setScale(rescale);
-        this.tortoiseHousePillar = this.add.sprite(centerX + 400*rescale, centerY + 5*rescale, 'tortoiseHousePillars').setScale(rescale);
-        this.tortoiseHouseSnow = this.add.sprite(centerX + 400*rescale, centerY - 20*rescale, 'tortoiseHouseSnow').setScale(rescale);
-        this.tortoiseHouseStairs = this.add.sprite(centerX + 400*rescale, centerY + 50*rescale, 'tortoiseHouseStairs').setScale(rescale);
+        this.tortoiseHouse = this.add.sprite(centerX + 600*rescale, centerY + 5*rescale, 'tortoiseHouse').setScale(rescale);
+        this.tortoiseHouseBase = this.add.sprite(centerX + 600*rescale, centerY + 5*rescale, 'tortoiseHouseBase').setScale(rescale);
+        this.tortoiseHousePillar = this.add.sprite(centerX + 600*rescale, centerY + 5*rescale, 'tortoiseHousePillars').setScale(rescale);
+        this.tortoiseHouseSnow = this.add.sprite(centerX + 600*rescale, centerY - 20*rescale, 'tortoiseHouseSnow').setScale(rescale);
+        this.tortoiseHouseStairs = this.add.sprite(centerX + 600*rescale, centerY + 50*rescale, 'tortoiseHouseStairs').setScale(rescale);
     }
 
     createCharacters() {
@@ -82,17 +86,22 @@ class Play extends Phaser.Scene {
         this.player.flipX = true;
 
         // Add Abby
-        this.abby = new NPC(this, centerX/2 + 400*rescale, centerY + 65*rescale, 'abby', 0, rescale, false).setOrigin(0.5, 1);
+        this.abby = new NPC(this, centerX/2 + 600*rescale, centerY + 65*rescale, 'abby', 0, rescale, false).setOrigin(0.5, 1);
         this.abby.flipX = true;
         this.abby.anims.play('abby_idle');
 
         // Add Tortoise
-        this.tortoise = new NPC(this, centerX/2 + 500*rescale, centerY + 30*rescale, 'tortoise', 0, rescale, false).setOrigin(0.5, 0);
+        this.tortoise = new NPC(this, centerX/2 + 700*rescale, centerY + 30*rescale, 'tortoise', 0, rescale, false).setOrigin(0.5, 0);
         this.tortoise.flipX = true;
 
         // Add Lamby
 
-        this.lamby = new NPC(this, 35*rescale, 130*rescale, 'lamby', 0, rescale, true, this.player).setOrigin(0.5, 1);
+        this.lamby = new NPC(this, 35*rescale, 130*rescale, 'lamby', 0, rescale, false).setOrigin(0.5, 1);
+        //this.lamby.flipX = true;
+        this.lamby.anims.play('lamby_idle');
+
+        this.shadow = new NPC(this, -15*rescale, 130*rescale, 'shadow', 0, rescale, false).setOrigin(0.5, 1).setDepth(3);
+        this.shadow.anims.play('shadow_walk');
 
         // Add invisible floor collision
         this.floor = this.add.rectangle(this.mapLength / 2, h, this.mapLength, 10*rescale, 0x000000, 0);
@@ -106,10 +115,12 @@ class Play extends Phaser.Scene {
 
         this.player.on('animationupdate', this.onAnimationUpdate, this);
         this.lamby.on('animationupdate', this.onAnimationUpdate, this);
+        this.abby.on('animationupdate', this.onAnimationUpdate, this);
+        this.shadow.on('animationupdate', this.onAnimationUpdate, this);
     }
 
     onAnimationUpdate(animation, frame) {
-        if (animation.key === 'agnes_idle' || animation.key === 'lamby_idle') {
+        if (animation.key === 'agnes_idle' || animation.key === 'lamby_idle' || animation.key === 'shadow_idle') {
             if (frame.index === 1) {
                 pauseForDuration(play, animation, 400);
             } else if (frame.index === 3) {
@@ -120,21 +131,33 @@ class Play extends Phaser.Scene {
         }
     }
 
-    createTextBubble(speaker, text) {
-        let talk = new TextBubble(this, speaker.x, speaker.y, 'textBubble', 0, rescale, text, speaker).setOrigin(1.2, 1).setDepth(3);
-        conversations.push(talk);
+    createTextBubble(speaker, text, depth, status, flipX, callback) {
+        // Status: 0 = continue, 1 = stop (fade out), 2 = pause + continue
+
+        // 0 is for continuing a sentence, 1 is for conversation end, 2 is for ending a sentence and continuing the conversation
+
+        let x, y;
+        if (speaker === this.player) {
+            x = this.player.x + 90*rescale;
+            y = this.player.y + 9.5*rescale;
+        } else if (speaker === this.lamby) {
+            x = this.lamby.x + 92*rescale;
+            y = this.lamby.y - 20*rescale;
+        }
+        new TextBubble(this, x, y, 'textBubble', 0, rescale, text, depth, status, flipX, () => {
+            callback();
+        });
     }
 
     cutsceneOne() {
         cutscene = true;
+        cutscenes[0] = true;
 
-        // create black screen
         this.blackScreen = this.add.rectangle(centerX, centerY, w, h + 20*rescale, 0x000000, 1).setOrigin(0.5).setDepth(4);
 
         this.time.delayedCall(700, () => {     
-            new TextBubble(this, centerX + 7*rescale, centerY + 42.5*rescale, 'textBubble', 0, rescale, "Agnes! Agnes wake up!! What happened?!", null, 5, 1, true, () => {
+            this.createTextBubble(this.lamby, "Agnes! Agnes wake up!! What happened?!", 5, 1, true, () => {
                 this.time.delayedCall(1000, () => {
-                    // Fade in
                     this.tweens.add({
                         targets: this.blackScreen,
                         alpha: 0,
@@ -142,26 +165,38 @@ class Play extends Phaser.Scene {
                         ease: 'Linear',
                         onComplete: () => {
                             this.blackScreen.destroy();
-                            new TextBubble(this, centerX + 7*rescale, centerY + 42.5*rescale, 'textBubble', 0, rescale, "I can't believe you walked out", null, 3, 0, true, () => {
-                                new TextBubble(this, centerX + 7*rescale, centerY + 42.5*rescale, 'textBubble', 0, rescale, "into the blizzard like that! ", null, 3, 2, true, () => {
-                                    new TextBubble(this, centerX + 7*rescale, centerY + 42.5*rescale, 'textBubble', 0, rescale, "Come back inside. ", null, 3, 2, true, () => {
-                                        new TextBubble(this, centerX + 7*rescale, centerY + 42.5*rescale, 'textBubble', 0, rescale, "You should just wait at the house", null, 3, 0, true, () => {
-                                            new TextBubble(this, centerX + 7*rescale, centerY + 42.5*rescale, 'textBubble', 0, rescale, "like your mother told you to! ", null, 3, 2, true, () => {
-                                                new TextBubble(this, centerX + 7*rescale, centerY + 42.5*rescale, 'textBubble', 0, rescale, "She's probably still looking for help out there!", null, 3, 1, true, () => {
-                                                    new TextBubble(this, centerX + 30*rescale, centerY + 44*rescale, 'textBubble', 0, rescale, "No, I have to find her. She could be hurt.", null, 3, 1, true, () => {
-                                                        cutscene = false;
-                                                        this.scene.launch('ui');
-                                                    });
-                                                });
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        }
-                    });
-                });    
-            });
-        }, null, this);
+                            this.createTextBubble(this.lamby, "I can't believe you walked out", 3, 0, true, () => {
+                            this.createTextBubble(this.lamby, "into the blizzard like that! ", 3, 2, true, () => {
+                            this.createTextBubble(this.lamby, "Come back inside. ", 3, 2, true, () => {
+                            this.createTextBubble(this.lamby, "You should just wait at the house", 3, 0, true, () => {
+                            this.createTextBubble(this.lamby, "like your mother told you to! ", 3, 2, true, () => {
+                            this.createTextBubble(this.lamby, "She's probably still looking for help out there!",  3, 2, true, () => {
+                            this.createTextBubble(this.player, "No, I have to find her. She could be hurt.",  3, 1, true, () => {
+                            this.time.delayedCall(1000, () => {
+                            this.tweens.add({
+                                targets: this.shadow,
+                                x: w + 50*rescale,
+                                duration: 1000,
+                                ease: 'Linear',
+                                onComplete: () => {
+                                    this.shadow.destroy();
+                            this.createTextBubble(this.player, "What was that?! Did you see that thing, Lamby?", 3, 2, true, () => {
+                            this.createTextBubble(this.lamby, "What in the world are you talking about?", 3, 2, true, () => {
+                            this.createTextBubble(this.lamby, "Jeez, that rock really messed you up, huh?", 3, 1, true, () => {
+                            this.createTextBubble(this.player, "You really didn't see that?", 3, 2, true, () => {
+                            this.createTextBubble(this.player, "Well, whatever, I just need to find mom.", 3, 2, true, () => {
+                            this.createTextBubble(this.lamby, "Uhhhh okay, but I really think you should just stay here.", 3, 2, true, () => {
+                            this.createTextBubble(this.lamby, "She said she's going to come back.", 3, 2, true, () => {
+                            this.createTextBubble(this.player, "I've waited too long, I have to try looking.", 3, 2, true, () => {
+                            this.createTextBubble(this.lamby, "Fine, I'll just wait here then because I know she'll be back.", 3, 2, true, () => {
+                            this.createTextBubble(this.player, "Okay then, bye Lamby…", 3, 1, true, () => {
+                                cutscene = false;
+        
+        }); }); }); }); }); }); }); }); }); }); }}); }); }); }); }); }); }); }); }); }}); }); }); });
+    }
+
+    cutsceneTwo() {
+        cutscene = true;
+        cutscenes[1] = true;
     }
 }
