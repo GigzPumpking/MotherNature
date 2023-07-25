@@ -23,10 +23,10 @@ class UI extends Phaser.Scene {
             this.scene.pause().launch(options);
         }
 
-        if (this.keyM.isDown && currScene != mus) {
+        /*if (this.keyM.isDown && currScene != mus) {
             this.scene.pause(currScene);
             this.scene.launch(mus);
-        }
+        }*/
     }
 
     cinematicViewEnter() {
