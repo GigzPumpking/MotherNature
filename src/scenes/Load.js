@@ -36,6 +36,8 @@ class Load extends Phaser.Scene {
         this.load.image('house', 'agnes_house.png');
         this.load.image('rock', 'rock.png');
         this.load.image('textBubble', 'text_bubble.png');
+        this.load.image('caveBack', 'CaveBack.png');
+        this.load.image('caveFront', 'CaveFront.png');
 
         // characterAssets
         this.load.path = 'assets/characters/';
@@ -78,6 +80,9 @@ class Load extends Phaser.Scene {
         this.load.image('nigel_shadow', 'nigel_shadow.png');
         this.load.image('abby_guitar', 'abby_guitar.png');
         this.load.image('agnes_guitar', 'agnes_guitar.png');
+
+        // tunnel assets
+        this.load.path = 'assets/tunnel/';
 
         // loading bar
         // See: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/loader/

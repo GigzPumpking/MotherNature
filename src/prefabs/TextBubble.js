@@ -20,10 +20,10 @@ class TextBubble extends Phaser.GameObjects.Sprite {
         this.fulltext = fulltext;
         this.destroyed = false;
 
-        if (flipX) this.textX = this.x - 71*rescale;
-        else this.textX = this.x - 73.5*rescale;
+        if (flipX) this.textX = this.x - 72*rescale;
+        else this.textX = this.x - 74.5*rescale;
 
-        this.speech = scene.add.text(this.textX, this.y - 27.5*rescale, '', { fontFamily: 'mxfont', fontSize: 6.7*rescale, align: 'left', wordWrap: { width: 56.5*rescale, useAdvancedWrap: false } }).setDepth(depth+0.5);
+        this.speech = scene.add.text(this.textX, this.y - 27.5*rescale, '', { fontFamily: 'mxfont', fontSize: 6.7*rescale, align: 'left', wordWrap: { width: 57*rescale, useAdvancedWrap: false } }).setDepth(depth+0.5);
 
         // make Interactive
         this.setInteractive();

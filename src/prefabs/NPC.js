@@ -57,8 +57,11 @@ class NPC extends Phaser.GameObjects.Sprite {
     }
 
     startConversation(speaker) {
-        if (speaker == play.lamby && cutsceneNum == 1) {
+        if (speaker == play.lamby) {
+            if (cutsceneNum == 1)
             this.conversation = "Having second thoughts?"
+            if (cutsceneNum == 4)
+            this.conversation = "You don't have to go in.";
         }
         play.createTextBubble(speaker, this.conversation, 3, true, () => {
             speaker.talkedTo = false;
