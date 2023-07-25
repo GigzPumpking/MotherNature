@@ -16,7 +16,7 @@ class Play extends Phaser.Scene {
 
         this.createCharacters();
 
-        this.cutsceneOne();
+        this.cutsceneZero();
 
         this.scene.launch(ui);
     }
@@ -36,7 +36,7 @@ class Play extends Phaser.Scene {
             conversations[i].update();
         }
 
-        if (this.player.x > centerX + 450*rescale && !cutscenes[1]) {
+        if (!cutscene && this.player.x > centerX + 450*rescale && cutsceneNum === 1) {
             this.cutsceneTwo();
         }
     }
@@ -72,8 +72,8 @@ class Play extends Phaser.Scene {
 
     agnesHouse() {
         this.house = this.add.sprite(centerX/2 - 20*rescale, centerY, 'house').setScale(rescale);
-        this.snowlump = this.add.sprite(centerX/2 + 25*rescale, centerY + 50*rescale, 'snowLump').setScale(rescale);
-        this.rock = this.add.sprite(centerX/2 + 90*rescale, centerY + 55*rescale, 'rock').setScale(rescale);
+        this.snowlump = this.add.sprite(centerX/2 + 52*rescale, centerY + 60*rescale, 'snowLump').setScale(rescale);
+        this.rock = this.add.sprite(centerX/2 + 88*rescale, centerY + 55*rescale, 'rock').setScale(rescale);
     }
 
     createTortoiseHouse() {
@@ -86,7 +86,7 @@ class Play extends Phaser.Scene {
 
     createCharacters() {
         // Add Player
-        this.player = new Player(this, centerX - 50*rescale, 102*rescale, 'agnes', 0, rescale).setOrigin(0.5, 0).setDepth(2);
+        this.player = new Player(this, centerX - 58*rescale, 102*rescale, 'agnes', 0, rescale).setOrigin(0.5, 0).setDepth(1).setAlpha(0);
         this.camera.startFollow(this.player, true, 0.25, 0.25);
 
         // Add Abby
@@ -94,7 +94,7 @@ class Play extends Phaser.Scene {
         this.abby.flipX = true;
         this.abby.anims.play('abby_idle');
 
-        this.abbyGuitar = this.add.sprite(this.abby.x - 5*rescale, this.abby.y + 5*rescale, 'abby_guitar').setScale(rescale).setOrigin(0.5, 1).setDepth(1);
+        this.abbyGuitar = this.add.sprite(this.abby.x - 2*rescale, this.abby.y + 2*rescale, 'agnes_guitar').setScale(rescale).setOrigin(0.5, 1).setDepth(1);
 
         // Add Nigel
         this.nigel = new NPC(this, centerX/2 + 640*rescale, centerY + 30*rescale, 'tortoise', 0, rescale, this.player).setOrigin(0.5, 0);
@@ -173,9 +173,90 @@ class Play extends Phaser.Scene {
         });
     }
 
-    cutsceneOne() {
+    blackScreenFade(alpha, duration, callback) {
+        this.tweens.add({
+            targets: this.blackScreen,
+            alpha: alpha,
+            duration: duration,
+            ease: 'Linear',
+            onComplete: () => {
+                callback();
+            }
+        });
+    }
+
+    cutsceneZero() {
         cutscene = true;
-        cutscenes[0] = true;
+        cutsceneNum = 0;
+
+        this.initialBG = this.add.rectangle(centerX, centerY, w*1.5, h + 20*rescale, 0x000000).setOrigin(0.5).setAlpha(1);
+
+        this.blackScreen = this.add.rectangle(centerX, centerY, w*1.5, h + 20*rescale, 0x000000).setOrigin(0.5).setDepth(2).setAlpha(1);
+        // Create scene 1
+        this.scene1 = this.add.sprite(centerX, centerY, 'Scene1').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
+
+        this.blackScreenFade(0, 3000, () => {
+        this.scene1.on('pointerdown', () => {
+            this.scene1.disableInteractive();
+            this.blackScreenFade(1, 1000, () => {
+            this.scene1.setAlpha(0);
+            this.scene2 = this.add.sprite(centerX, centerY, 'Scene2').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
+            this.blackScreenFade(0, 1000, () => {
+        this.scene2.on('pointerdown', () => {
+            this.scene2.disableInteractive();
+            this.blackScreenFade(1, 1000, () => {
+            this.scene2.setAlpha(0);
+            this.scene3 = this.add.sprite(centerX, centerY, 'Scene3').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
+            this.blackScreenFade(0, 1000, () => {
+        this.scene3.on('pointerdown', () => {
+            this.scene3.disableInteractive();
+            this.blackScreenFade(1, 1000, () => {
+            this.scene3.setAlpha(0);
+            this.scene4 = this.add.sprite(centerX, centerY, 'Scene4').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
+            this.blackScreenFade(0, 1000, () => {
+        this.scene4.on('pointerdown', () => {
+            this.scene4.disableInteractive();
+            this.blackScreenFade(1, 1000, () => {
+            this.scene4.setAlpha(0);
+            this.scene5 = this.add.sprite(centerX, centerY, 'Scene5', 0).setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
+            this.blackScreenFade(0, 1000, () => {
+            this.scene5.anims.play('scene5');
+        this.scene5.on('pointerdown', () => {
+            this.scene5.disableInteractive();
+            this.blackScreenFade(1, 1000, () => {
+            this.scene5.setAlpha(0);
+            this.scene6 = this.add.sprite(centerX, centerY, 'Scene6').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
+            this.blackScreenFade(0, 1000,  () => {
+        this.scene6.on('pointerdown', () => {
+            this.scene6.disableInteractive();
+            this.blackScreenFade(1, 1000, () => {
+            this.scene6.setAlpha(0);
+            this.scene7 = this.add.sprite(centerX, centerY, 'Scene7').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
+            this.blackScreenFade(0, 1000, () => {
+        this.scene7.on('pointerdown', () => {
+            this.scene7.disableInteractive();
+            this.blackScreenFade(1, 1000, () => {
+            this.scene7.setAlpha(0);
+            this.initialBG.destroy();
+            this.blackScreenFade(0, 1000, () => {
+                this.player.setAlpha(1);
+                this.cutsceneOne();
+            });
+
+        }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); });
+    }
+
+    cutsceneOne() {
+        this.scenes = [this.scene1, this.scene2, this.scene3, this.scene4, this.scene5, this.scene6, this.scene7];
+        // make all scenes invisible if they are not already (backup manuever)
+        for (let i = 0; i < this.scenes.length; i++) {
+            this.scenes[i].setAlpha(0);
+        }
+
+        cutscene = true;
+        cutsceneNum = 1;
+
+        this.snowlump.setDepth(2);
 
         this.player.anims.play('agnes_idle');
 
@@ -185,7 +266,7 @@ class Play extends Phaser.Scene {
         this.player.anims.play('agnes_walk');
         this.tweens.add({
             targets: this.player,
-            x: centerX - 15*rescale,
+            x: centerX - 23*rescale,
             duration: 1500,
             ease: 'Linear',
             onComplete: () => {
@@ -195,8 +276,6 @@ class Play extends Phaser.Scene {
 
         // on trip animation complete
         this.player.on('animationcomplete', () => {
-
-        this.blackScreen = this.add.rectangle(centerX, centerY, w*1.5, h + 20*rescale, 0x000000).setOrigin(0.5).setDepth(4).setAlpha(0);
 
         // fade in black screen
         this.tweens.add({
@@ -210,6 +289,7 @@ class Play extends Phaser.Scene {
         this.player.y += 2*rescale;
         this.player.anims.play('agnes_idle');
         this.lamby.setAlpha(1);
+        this.snowlump.setDepth(1);
 
         this.time.delayedCall(3000, () => {     
             this.createTextBubble(this.lamby, "Agnes! Agnes wake up!! What happened?!", 5, true, () => {
@@ -243,9 +323,9 @@ class Play extends Phaser.Scene {
                             this.createTextBubble(this.player, "Well, whatever, I just need to find mom.", 3, false, () => {
                             this.createTextBubble(this.lamby, "Uhhhh okay, but I really think you should just stay here.", 3, true, () => {
                             this.createTextBubble(this.lamby, "She said she's going to come back.", 3, true, () => {
-                            this.createTextBubble(this.player, "I've waited too long, I have to try looking.", 3, true, () => {
+                            this.createTextBubble(this.player, "I've waited too long, I have to try looking.", 3, false, () => {
                             this.createTextBubble(this.lamby, "Fine, I'll just wait here then, since I know she'll be back.", 3, true, () => {
-                            this.createTextBubble(this.player, "Okay then, bye Lamby…", 3, true, () => {
+                            this.createTextBubble(this.player, "Okay then, bye Lamby…", 3, false, () => {
                                 cutscene = false;
                                 ui.cinematicViewExit();
 
@@ -255,7 +335,7 @@ class Play extends Phaser.Scene {
 
     cutsceneTwo() {
         cutscene = true;
-        cutscenes[1] = true;
+        cutsceneNum = 2;
         ui.cinematicViewEnter();
         this.player.anims.play('agnes_idle');
         // pan camera to Abby

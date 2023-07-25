@@ -13,13 +13,6 @@ class Title extends Phaser.Scene {
         // Create background
         this.background = this.add.tileSprite(0, 0, w, h, 'menuBG').setOrigin(0, 0);
 
-        // Temporary Text Title, replace with commented out sprite below when assets available
-
-        this.title = this.add.text(centerX, centerY - 35*rescale, "She'll Come Back", titleConfig).setOrigin(0.5).setFontSize(18*rescale);
-        /* = this.add.sprite(centerX, centerY - 25*rescale, 'TITLE').setScale(rescale) */;
-
-        jiggle(this, this.title);
-
         this.controlsButton = new Button(this, centerX - 16*rescale, centerY + 10*rescale, 'controls', 'controlsHover', rescale, () => {
             this.scene.pause().launch(controls);
         });

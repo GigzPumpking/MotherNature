@@ -76,8 +76,6 @@ class Options extends Phaser.Scene {
                 createBackButton(this, currScene, prevScene);
             }
         }
-
-        this.brightnessBar();
     }
 
     update() {

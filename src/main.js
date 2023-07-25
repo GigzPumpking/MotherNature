@@ -103,4 +103,4 @@ let inventory = [];
 
 let conversations = [];
 
-let cutscenes = [false, false, false, false, false, false];
+let cutsceneNum = 0;

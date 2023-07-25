@@ -15,6 +15,18 @@ class Load extends Phaser.Scene {
         this.load.image('controlsHover', 'yellow_controls.png');
         this.load.image('arrow', 'arrow.png');
 
+        // Stills
+        this.load.path = 'assets/Stills/';
+        this.load.image('lamby_stuffed', 'lamby_stuffed.png');
+        this.load.image("Scene1", "Scene1.png");
+        this.load.image("Scene2", "Scene2.png");
+        this.load.image("Scene3", "Scene3.png");
+        this.load.image("Scene4", "Scene4.png");
+        this.load.image("Scene5Sheet", "Scene5.png");
+        this.load.spritesheet("Scene5", "Scene5.png", { frameWidth: 160, frameHeight: 90, startFrame: 0, endFrame: 3 });
+        this.load.image("Scene6", "Scene6.png");
+        this.load.image("Scene7", "Scene7.png");
+
         // environmentAssets
         this.load.path = 'assets/environment/';
         this.load.image('snowLump', 'lumpOfSnow.png');
@@ -96,6 +108,13 @@ class Load extends Phaser.Scene {
         music = [];
 
         // Animation
+        play.anims.create({
+            key: 'scene5',
+            frames: this.anims.generateFrameNumbers('Scene5', { start: 0, end: 3, first: 0}),
+            frameRate: 5,
+            repeat: 0
+        });
+
         play.anims.create({
             key: 'abby_idle',
             frames: this.anims.generateFrameNumbers('abbyIdle', { start: 0, end: 6, first: 0}),

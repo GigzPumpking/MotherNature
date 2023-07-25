@@ -13,6 +13,18 @@ class NPC extends Phaser.GameObjects.Sprite {
         this.player = player;
 
         this.texture = texture;
+
+        this.setInteractive();
+
+        this.conversation = "";
+        this.talkedTo = false;
+
+        // on click, start conversation
+        this.on('pointerdown', () => {
+            if (this.player != null && !cutscene && !this.talkedTo) {
+                this.startConversation(this);
+            }
+        });
     }
 
     update() {
@@ -42,5 +54,16 @@ class NPC extends Phaser.GameObjects.Sprite {
             this.body.setVelocityX(0);
             this.anims.play('lamby_idle', true);
         }*/
+    }
+
+    startConversation(speaker) {
+        if (speaker == play.lamby && cutsceneNum == 1) {
+            this.conversation = "Having second thoughts?"
+        }
+        play.createTextBubble(speaker, this.conversation, 3, true, () => {
+            speaker.talkedTo = false;
+        });
+
+        this.talkedTo = true;
     }
 }
