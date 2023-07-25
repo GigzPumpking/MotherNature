@@ -22,7 +22,7 @@ class Load extends Phaser.Scene {
         this.load.image("Scene2", "Scene2.png");
         this.load.image("Scene3", "Scene3.png");
         this.load.image("Scene4", "Scene4.png");
-        this.load.image("Scene5Sheet", "scene5.png");
+        this.load.image("Scene5Sheet", "Scene5.png");
         this.load.spritesheet("Scene5", "Scene5.png", { frameWidth: 160, frameHeight: 90, startFrame: 0, endFrame: 3 });
         this.load.image("Scene6", "Scene6.png");
         this.load.image("Scene7", "Scene7.png");

@@ -37,8 +37,16 @@ class Play extends Phaser.Scene {
             conversations[i].update();
         }
 
-        if (!cutscene && this.player.x > centerX + 440*rescale && cutsceneNum === 1) {
+        if (!cutscene && this.player.x > centerX + this.tortoiseHousex - 160*rescale && cutsceneNum === 1) {
             this.cutsceneTwo();
+        }
+
+        if (!cutscene && this.player.x > this.tunnelBack.x - 130*rescale && cutsceneNum === 3) {
+            this.cutsceneFour();
+        }
+
+        if (!cutscene && this.player.x > this.tunnelBack.x + 40*rescale && cutsceneNum === 4) {
+            this.cutsceneFive();
         }
 
         if (!cutscene && this.player.x > this.tunnelBack2.x + 210*rescale && cutsceneNum === 5) {
@@ -350,7 +358,7 @@ class Play extends Phaser.Scene {
     }
 
     cutsceneTwo() {
-        this.player.setAlpha(1);
+        this.player.setAlpha(1).setDepth(2);
         this.player.x = centerX + this.tortoiseHousex - 160*rescale;
         cutscene = true;
         cutsceneNum = 2;
@@ -418,6 +426,15 @@ class Play extends Phaser.Scene {
                 cutscene = false;
                 ui.cinematicViewExit();
                 this.camera.startFollow(this.player, true, 0.25, 0.25);
+                
+                // Temporary Transition
+                // Wait 1 second
+                this.time.delayedCall(1000, () => {
+                    this.nigel.setAlpha(1);
+                    this.nigel.flipX = true;
+                    this.nigel.x = centerX/2 + this.tortoiseHousex + 40*rescale;
+                    this.cutsceneThree();
+                });
 
             }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }});
                 
@@ -643,8 +660,10 @@ class Play extends Phaser.Scene {
                         });
 
                         this.yes.on('pointerdown', () => {
+                            this.no.disableInteractive();
                             this.yes.disableInteractive();
-                            this.yes.setFontSize(20*rescale);
+                            this.no.setAlpha(0);
+                            this.yes.setAlpha(0);
                             this.player.anims.play('agnes_walk');
                             // tween player to the right
                             this.tweens.add({
@@ -654,6 +673,9 @@ class Play extends Phaser.Scene {
                                 ease: 'Linear',
                                 onComplete: () => {
                                     this.player.anims.play('agnes_idle');
+                                    this.createTextBubble(this.lamby, "The End.", 3, true, () => {
+                                    
+                                    });
                                 }
                             });
                         });
