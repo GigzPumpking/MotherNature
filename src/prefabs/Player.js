@@ -11,7 +11,7 @@ class Player extends Phaser.GameObjects.Sprite {
         this.body.setCollideWorldBounds(true);
         this.body.setDragX(1000);
 
-        this.playerSpeed = 200;
+        this.playerSpeed = 100;
 
         this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -22,8 +22,11 @@ class Player extends Phaser.GameObjects.Sprite {
     update() {
 
         if (!this.sideScrollerMovement()) {
-            play.player.anims.play('agnes_idle', true);
-        };
+            this.scene.player.anims.play('agnes_idle', true);
+            if (footsteps_snow.isPlaying) footsteps_snow.stop();
+        } else {
+            if (!footsteps_snow.isPlaying) footsteps_snow.play();
+        }
     }
 
     sideScrollerMovement() {

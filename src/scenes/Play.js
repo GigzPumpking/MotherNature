@@ -195,7 +195,11 @@ class Play extends Phaser.Scene {
             y = this.nigel.y;
         }
 
-        new TextBubble(this, x, y, 'textBubble', 0, rescale, text, depth, flipX, callback);
+        let textBubble = new TextBubble(this, x, y, 'textBubble', 0, rescale, text, depth, flipX, speaker, callback);
+
+        this.input.on('pointerdown', () => {
+            if (!textBubble.destroyed) textBubble.skip();
+        });
     }
 
     blackScreenFade(alpha, duration, callback) {
@@ -219,7 +223,7 @@ class Play extends Phaser.Scene {
         this.blackScreen = this.add.rectangle(centerX, centerY, w*1.5, h + 20*rescale, 0x000000).setOrigin(0.5).setDepth(2).setAlpha(1);
         // Create scene 1
         this.scene1 = this.add.sprite(centerX, centerY, 'Scene1').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
-
+        TV.play();
         this.blackScreenFade(0, 3000, () => {
         this.scene1.on('pointerdown', () => {
             this.scene1.disableInteractive();
@@ -228,6 +232,7 @@ class Play extends Phaser.Scene {
             this.scene2 = this.add.sprite(centerX, centerY, 'Scene2').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
             this.blackScreenFade(0, 1000, () => {
         this.scene2.on('pointerdown', () => {
+            TV.stop();
             this.scene2.disableInteractive();
             this.blackScreenFade(1, 1000, () => {
             this.scene2.setAlpha(0);
@@ -282,6 +287,8 @@ class Play extends Phaser.Scene {
         cutsceneNum = 1;
 
         this.snowlump.setDepth(2);
+
+        doorOpen.play();
 
         this.player.anims.play('agnes_idle');
 

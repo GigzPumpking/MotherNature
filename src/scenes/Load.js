@@ -81,6 +81,15 @@ class Load extends Phaser.Scene {
         this.load.image('abby_guitar', 'abby_guitar.png');
         this.load.image('agnes_guitar', 'agnes_guitar.png');
 
+        // SFX assets
+        this.load.path = 'assets/SFX/';
+        this.load.audio('agnesVoice', 'agnes_voice_long.mp3');
+        this.load.audio('agnesVoice2', 'agnes_voice_short.mp3');
+        this.load.audio('TV', 'broadcast_TV_fuzz.mp3');
+        this.load.audio('doorClose', 'door_closing.mp3');
+        this.load.audio('doorOpen', 'door_opening.mp3');
+        this.load.audio('footsteps_snow', 'footsteps_snow.mp3');
+
         // tunnel assets
         this.load.path = 'assets/tunnel/';
 
@@ -189,6 +198,21 @@ class Load extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
+
+        // create agnes voice
+        agnesVoice = this.sound.add('agnesVoice');
+        agnesVoice2 = this.sound.add('agnesVoice2');
+
+        // create TV sound
+        TV = this.sound.add('TV');
+        TV.loop = true;
+
+        // create door sounds
+        doorClose = this.sound.add('doorClose');
+        doorOpen = this.sound.add('doorOpen');
+
+        // create footsteps sound
+        footsteps_snow = this.sound.add('footsteps_snow');
 
         // Start Title Scene
         this.scene.start(title);

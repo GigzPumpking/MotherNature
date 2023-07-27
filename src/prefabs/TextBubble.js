@@ -1,5 +1,5 @@
 class TextBubble extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, frame, scale, fulltext, depth, flipX, callback) {
+    constructor(scene, x, y, texture, frame, scale, fulltext, depth, flipX, speaker, callback) {
         super(scene, x, y, texture, frame, scale);
 
         scene.add.existing(this);
@@ -10,9 +10,13 @@ class TextBubble extends Phaser.GameObjects.Sprite {
         this.depth = depth;
         this.callback = callback;
         this.flipX = flipX;
+        this.speaker = speaker;
 
         this.timer = 0;
         this.cooldown = 1;
+        this.sfxTimer = 0;
+        this.sfxCooldown = 2;
+
 
         // set origin
         this.setOrigin(1.2, 1);
@@ -25,18 +29,6 @@ class TextBubble extends Phaser.GameObjects.Sprite {
 
         this.speech = scene.add.text(this.textX, this.y - 27.5*rescale, '', { fontFamily: 'mxfont', fontSize: 6.7*rescale, align: 'left', wordWrap: { width: 57*rescale, useAdvancedWrap: false } }).setDepth(depth+0.5);
 
-        // make Interactive
-        this.setInteractive();
-
-        // On click, delete
-        this.on('pointerdown', () => {
-            if (this.speech.text.length < this.fulltext.length) {
-                this.speech.text = this.fulltext;
-            } else {
-                this.delete(this.status);
-            }
-        });
-
         conversations.push(this);
     }
 
@@ -47,8 +39,10 @@ class TextBubble extends Phaser.GameObjects.Sprite {
                     this.speech.text += this.fulltext[this.speech.text.length];
                     if (this.speech.text[this.speech.text.length-1] === '.' || this.speech.text[this.speech.text.length-1] === '?' || this.speech.text[this.speech.text.length-1] === '!' || this.speech.text[this.speech.text.length-1] === ',' && this.fulltext[this.speech.text.length] === ' ') {
                         this.cooldown = 7.5;
+                        this.sfxPlay(1);
                     } else {
                         this.cooldown = 1;
+                        this.sfxPlay(2);
                     }
                     this.timer = 0;
                 } 
@@ -65,6 +59,30 @@ class TextBubble extends Phaser.GameObjects.Sprite {
         this.callback();
         this.speech.destroy();
         this.destroy();
+    }
+
+    sfxPlay(num) {
+        if (this.sfxTimer >= this.sfxCooldown) {
+            this.sfxTimer = 0;
+            this.sfxCooldown = 2;
+            if (this.speaker === this.scene.player) {
+                if (num === 1) {
+                    agnesVoice.play();
+                } else {
+                    agnesVoice2.play();
+                }
+            }
+        } else {
+            this.sfxTimer += 0.5;
+        }
+    }
+
+    skip() {
+        if (this.speech.text.length < this.fulltext.length) {
+            this.speech.text = this.fulltext;
+        } else {
+            this.delete(this.status);
+        }
     }
 
 }

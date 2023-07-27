@@ -92,6 +92,12 @@ let music = [];
 let musicVolume = 0.5;
 let sfxVolume = 0.5;
 
+// SFX List
+let agnesVoice, agnesVoice2 = null;
+let TV = null;
+let doorClose, doorOpen = null;
+let footsteps_snow = null;
+
 let brightnessBG = null;
 let brightness = 1;
 
