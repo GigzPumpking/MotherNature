@@ -94,9 +94,16 @@ let sfxVolume = 0.5;
 
 // SFX List
 let agnesVoice, agnesVoice2 = null;
+let lambyVoice, lambyVoice2 = null;
+let turtleDadVoice, turtleDadVoice2 = null;
+let turtleDaughterVoice, turtleDaughterVoice2 = null;
 let TV = null;
+let hammerWood = null;
 let doorClose, doorOpen = null;
 let footsteps_snow = null;
+let trip = null;
+let shadowyWoosh = null;
+let menuSelect = null;
 
 let brightnessBG = null;
 let brightness = 1;

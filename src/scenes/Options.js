@@ -9,11 +9,11 @@ class Options extends Phaser.Scene {
         this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
-        this.menu = this.add.rectangle(centerX, centerY + 5*rescale, 100*rescale, 65*rescale, 0x000000, 0.7);
+        this.menu = this.add.sprite(centerX, centerY, 'pauseBox').setScale(rescale).setOrigin(0.5, 0.5);
 
         // Temporary Text Buttons, replace with commented out sprites when assets available
 
-        let Resume = new TextButton(this, centerX, centerY - 16.5*rescale, 'Resume', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
+        let Resume = new Button(this, centerX - 12.5*rescale, centerY - 10.5*rescale, 'resumeP', 'resumePHover', rescale, () => {
             music = [];
             music.forEach(song => {
                 if (song.isPaused) song.resume();
@@ -21,16 +21,9 @@ class Options extends Phaser.Scene {
             this.scene.resume(currScene).resume(ui).stop();
         })
 
-        /* new ButtonR(this, centerX - 1.5*rescale, centerY - 11.5*rescale, 'resumeButton', rescale, () => {
-            music = [];
-            music.forEach(song => {
-                if (song.isPaused) song.resume();
-            })
-            this.scene.resume(currScene).resume(ui).stop();
-        }) */
-
         if (currScene != title) {
-            let Restart = new TextButton(this, centerX, centerY - 0.5*rescale, 'Restart', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
+            let Restart = new Button(this, centerX - 13.5*rescale, centerY, 'restartP', 'restartPHover', rescale, () => {
+                menuSelect.play();
                 music = [];
                 music.forEach(song => {
                     if (song.isPlaying || song.isPaused) song.stop();
@@ -39,18 +32,8 @@ class Options extends Phaser.Scene {
                 this.scene.stop(currScene).stop(ui).start(play).stop();
             })
 
-            /* new ButtonR(this, centerX - 1.5*rescale, centerY + 4.5*rescale, 'restartButton', rescale, () => {
-                music = [];
-                music.forEach(song => {
-                    if (song.isPlaying || song.isPaused) song.stop();
-                })
-
-                this.scene.stop(currScene).stop(ui).start(currScene).stop();
-            }) */
-
-            let MainMenu = new TextButton(this, centerX, centerY + 14.5*rescale, 'Main Menu', Object.assign({}, textConfig, {fontSize: 6*rescale}), () => {
-                if (currScene == title) this.scene.resume(title).stop();
-                
+            let MainMenu = new Button(this, centerX - 18.5*rescale, centerY + 10.5*rescale, 'mainMenuP', 'mainMenuPHover', rescale, () => {
+                menuSelect.play();
                 music = [];
                 music.forEach(song => {
                     if (song.isPlaying || song.isPaused) song.stop();
@@ -59,18 +42,7 @@ class Options extends Phaser.Scene {
                 if (currScene != play) this.scene.stop(play);
 
                 this.scene.stop(currScene).stop(ui).start(title);
-            })
-            
-            /* new ButtonR(this, centerX - rescale/2, centerY + 19.5*rescale, 'mainMenuButton', rescale, () => {
-                if (currScene == title) this.scene.resume(title).stop();
-
-                music = [];
-                music.forEach(song => {
-                    if (song.isPlaying || song.isPaused) song.stop();
-                })
-
-                this.scene.stop(currScene).stop(ui).start(title);
-            }) */
+            }) 
 
             if (currScene != play) {
                 createBackButton(this, currScene, prevScene);
@@ -89,6 +61,7 @@ class Options extends Phaser.Scene {
 
         if (currScene != title) {
             if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
+                menuSelect.play();
                 music = [];
                 music.forEach(song => {
                     if (song.isPlaying || song.isPaused) song.stop();
@@ -98,6 +71,7 @@ class Options extends Phaser.Scene {
             }
     
             if (Phaser.Input.Keyboard.JustDown(this.keyM)) {
+                menuSelect.play();
                 if (currScene == title) this.scene.resume(title).stop();
     
                 music = [];

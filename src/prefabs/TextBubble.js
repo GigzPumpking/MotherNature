@@ -71,6 +71,24 @@ class TextBubble extends Phaser.GameObjects.Sprite {
                 } else {
                     agnesVoice2.play();
                 }
+            } else if (this.speaker === this.scene.lamby) {
+                if (num === 1) {
+                    lambyVoice.play();
+                } else {
+                    lambyVoice2.play();
+                }
+            } else if (this.speaker === this.scene.nigel) {
+                if (num === 1) {
+                    turtleDadVoice.play();
+                } else {
+                    turtleDadVoice2.play();
+                }
+            } else if (this.speaker === this.scene.abby) {
+                if (num === 1) {
+                    turtleDaughterVoice.play();
+                } else {
+                    turtleDaughterVoice2.play();
+                }
             }
         } else {
             this.sfxTimer += 0.5;

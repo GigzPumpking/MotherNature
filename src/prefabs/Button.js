@@ -22,7 +22,11 @@ class Button extends Phaser.GameObjects.Sprite {
 
     pointerOn() {
         this.setTexture(this.texture2);
-        this.arrow = this.scene.add.sprite(this.x - 4*rescale, this.y, 'arrow').setScale(rescale);
+        this.arrow;
+        if (this.scene == title) this.arrow = this.scene.add.sprite(this.x - 4*rescale, this.y, 'arrow').setScale(rescale);
+        else if (this.scene == options) {
+            this.arrow = this.scene.add.sprite(this.x - 4*rescale, this.y, 'arrowP').setScale(rescale);
+        }
     }
 
     pointerOut() {

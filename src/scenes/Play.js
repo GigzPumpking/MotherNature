@@ -223,6 +223,7 @@ class Play extends Phaser.Scene {
         this.blackScreen = this.add.rectangle(centerX, centerY, w*1.5, h + 20*rescale, 0x000000).setOrigin(0.5).setDepth(2).setAlpha(1);
         // Create scene 1
         this.scene1 = this.add.sprite(centerX, centerY, 'Scene1').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
+        TV.setVolume(1);
         TV.play();
         this.blackScreenFade(0, 3000, () => {
         this.scene1.on('pointerdown', () => {
@@ -232,13 +233,35 @@ class Play extends Phaser.Scene {
             this.scene2 = this.add.sprite(centerX, centerY, 'Scene2').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
             this.blackScreenFade(0, 1000, () => {
         this.scene2.on('pointerdown', () => {
-            TV.stop();
+            // fade out TV sound
+            this.tweens.add({
+                targets: TV,
+                volume: 0,
+                duration: 1000,
+                ease: 'Linear',
+                onComplete: () => {
+                    TV.stop();
+                }
+            });
             this.scene2.disableInteractive();
             this.blackScreenFade(1, 1000, () => {
             this.scene2.setAlpha(0);
             this.scene3 = this.add.sprite(centerX, centerY, 'Scene3').setScale(rescale).setOrigin(0.5).setDepth(1.5).setInteractive();
+            hammerWood.setVolume(1);
+            hammerWood.play();
+            // fade out hammerWood sound
+            this.tweens.add({
+                targets: hammerWood,
+                volume: 0,
+                duration: 2000,
+                ease: 'Linear',
+                onComplete: () => {
+                    hammerWood.stop();
+                }
+            });
             this.blackScreenFade(0, 1000, () => {
         this.scene3.on('pointerdown', () => {
+            if (hammerWood.isPlaying) hammerWood.stop();
             this.scene3.disableInteractive();
             this.blackScreenFade(1, 1000, () => {
             this.scene3.setAlpha(0);
@@ -301,7 +324,18 @@ class Play extends Phaser.Scene {
             x: centerX - 23*rescale,
             duration: 1500,
             ease: 'Linear',
+            // play snow step sound
+            onProgress: () => {
+                if (this.player.x < centerX - 23*rescale) {
+                    console.log("snow step");
+                    footsteps_snow.play();
+                    // play at a faster rate
+                    footsteps_snow.rate = 1.5;
+                }
+            },
             onComplete: () => {
+        footsteps_snow.stop();
+        trip.play();
         this.player.x += 16.5*rescale;
         this.player.anims.play('agnes_trip');
         this.player.y -= 4*rescale;
@@ -340,6 +374,7 @@ class Play extends Phaser.Scene {
                             this.createTextBubble(this.lamby, "She's probably still looking for help out there!", 3, true, () => {
                             this.createTextBubble(this.player, "No, I have to find her. She could be hurt.",  3, false, () => {
                             this.time.delayedCall(1000, () => {
+                            shadowyWoosh.play();
                             this.tweens.add({
                                 targets: this.shadow,
                                 x: w + 50*rescale,
@@ -365,6 +400,9 @@ class Play extends Phaser.Scene {
     }
 
     cutsceneTwo() {
+        if (footsteps_snow.isPlaying) {
+            footsteps_snow.stop();
+        }
         this.player.setAlpha(1).setDepth(2);
         this.player.x = centerX + this.tortoiseHousex - 160*rescale;
         cutscene = true;

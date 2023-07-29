@@ -85,10 +85,32 @@ class Load extends Phaser.Scene {
         this.load.path = 'assets/SFX/';
         this.load.audio('agnesVoice', 'agnes_voice_long.mp3');
         this.load.audio('agnesVoice2', 'agnes_voice_short.mp3');
+        this.load.audio('lambyVoice', 'lamby_voice_long.mp3');
+        this.load.audio('lambyVoice2', 'lamby_voice_short.mp3');
+        this.load.audio('turtleDadVoice', 'turtle_dad_voice_long.mp3');
+        this.load.audio('turtleDadVoice2', 'turtle_dad_voice_short.mp3');
+        this.load.audio('turtleDaughterVoice', 'turtle_daughter_voice_long.mp3');
+        this.load.audio('turtleDaughterVoice2', 'turtle_daughter_voice_short.mp3');
+
         this.load.audio('TV', 'broadcast_TV_fuzz.mp3');
+        this.load.audio('hammerWood', 'hammering_wooden_boards.mp3');
         this.load.audio('doorClose', 'door_closing.mp3');
         this.load.audio('doorOpen', 'door_opening.mp3');
         this.load.audio('footsteps_snow', 'footsteps_snow.mp3');
+        this.load.audio('trip', 'tripping_in_snow.mp3');
+        this.load.audio('shadowy_figure_woosh', 'shadowy_figure_woosh.mp3');
+        this.load.audio('menuSelect', 'menu_select.mp3');
+
+        // pause assets
+        this.load.path = 'assets/pause/';
+        this.load.image('arrowP', 'arrow.png');
+        this.load.image('mainMenuP', 'mainmenu.png');
+        this.load.image('pauseBox', 'pauseBox.png');
+        this.load.image('resumeP', 'resume.png');
+        this.load.image('restartP', 'restart.png');
+        this.load.image('mainMenuPHover', 'yellow_mainmenu.png');
+        this.load.image('resumePHover', 'yellow_resume.png');
+        this.load.image('restartPHover', 'yellow_restart.png');
 
         // tunnel assets
         this.load.path = 'assets/tunnel/';
@@ -203,9 +225,24 @@ class Load extends Phaser.Scene {
         agnesVoice = this.sound.add('agnesVoice');
         agnesVoice2 = this.sound.add('agnesVoice2');
 
+        // create lamby voice
+        lambyVoice = this.sound.add('lambyVoice');
+        lambyVoice2 = this.sound.add('lambyVoice2');
+
+        // create turtle dad voice
+        turtleDadVoice = this.sound.add('turtleDadVoice');
+        turtleDadVoice2 = this.sound.add('turtleDadVoice2');
+
+        // create turtle daughter voice
+        turtleDaughterVoice = this.sound.add('turtleDaughterVoice');
+        turtleDaughterVoice2 = this.sound.add('turtleDaughterVoice2');
+
         // create TV sound
         TV = this.sound.add('TV');
         TV.loop = true;
+
+        // create hammerWood sound
+        hammerWood = this.sound.add('hammerWood');
 
         // create door sounds
         doorClose = this.sound.add('doorClose');
@@ -213,6 +250,15 @@ class Load extends Phaser.Scene {
 
         // create footsteps sound
         footsteps_snow = this.sound.add('footsteps_snow');
+
+        // create trip sound
+        trip = this.sound.add('trip');
+
+        // menu select sound
+        menuSelect = this.sound.add('menuSelect');
+
+        // shadowey woosh
+        shadowyWoosh = this.sound.add('shadowy_figure_woosh');
 
         // Start Title Scene
         this.scene.start(title);

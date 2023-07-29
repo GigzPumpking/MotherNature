@@ -14,14 +14,17 @@ class Title extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, w, h, 'menuBG').setOrigin(0, 0);
 
         this.controlsButton = new Button(this, centerX - 16*rescale, centerY + 10*rescale, 'controls', 'controlsHover', rescale, () => {
+            menuSelect.play();
             this.scene.pause().launch(controls);
         });
 
         this.optionsButton = new Button(this, centerX - 13*rescale, centerY, 'options', 'optionsHover', rescale, () => {
+            menuSelect.play();
             this.scene.pause().launch(options);
         });
 
         this.startButton = new Button(this, centerX - 9.5*rescale, centerY - 10*rescale, 'start', 'startHover', rescale, () => {
+            menuSelect.play();
             this.scene.start(play);
         }); 
 
@@ -35,14 +38,17 @@ class Title extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.keyC)) {
+            menuSelect.play();
             this.scene.pause().launch(controls);
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.keyO)) {
+            menuSelect.play();
             this.scene.pause().launch(options);
         }
 
         if (Phaser.Input.Keyboard.JustDown(this.keySPACE)) {
+            menuSelect.play();
             this.scene.start(play);
         }
     }
