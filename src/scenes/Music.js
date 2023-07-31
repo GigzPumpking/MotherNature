@@ -4,6 +4,9 @@ class Music extends Phaser.Scene {
     }
 
     create() {
+        music[2].play();
+        music[2].setLoop(true);
+
         // Create background
         this.background = this.add.image(0, 0, 'guitarBG').setOrigin(0, 0).setScale(rescale);
 
@@ -21,8 +24,10 @@ class Music extends Phaser.Scene {
         this.slice.flipY = true;
 
         this.abby = this.add.sprite(centerX, centerY + 21.5*rescale, 'abby', 0).setScale(rescale).setOrigin(0.5, 0.75);
+        this.abby.anims.play('abby_idle');
 
         this.agnes = new RotatingObject(this, centerX + 40*rescale, centerY + 21.5*rescale, 'agnes', 0, rescale, 40*rescale, 0, 0.01).setOrigin(0.5, 1);
+        this.agnes.anims.play('agnes_idleM');
 
         this.nigel = this.add.sprite(centerX + 28.5*rescale, 15.4*rescale, 'nigel_shadow', 0).setScale(rescale).setAlpha(0);
 
@@ -33,6 +38,8 @@ class Music extends Phaser.Scene {
 
         // Create dad head to mark the end of the green bar
         this.dadHead = this.add.image(w - 25*rescale, centerY + 2.75*rescale, 'dad_head').setScale(rescale);
+
+        this.agnes.on('animationupdate', this.onAnimationUpdate, this);
     }
 
     update() {
@@ -50,6 +57,13 @@ class Music extends Phaser.Scene {
             if (this.greenBar.displayHeight < this.redBar.displayHeight) this.greenBar.displayHeight += 0.25;
         } else {
             if (this.greenBar.displayHeight > 0) this.greenBar.displayHeight -= 0.5;
+        }
+
+        if (this.greenBar.displayHeight >= this.redBar.displayHeight) {
+            this.scene.resume(play);
+            play.cutsceneThree();
+            music[2].stop();
+            this.scene.stop();
         }
 
         if (this.keyA.isDown) {
@@ -71,5 +85,17 @@ class Music extends Phaser.Scene {
 
     progressUpdateBool(x, y, x1, x2, y1, y2) {
         return (this.agnes.x > x - x1 && this.agnes.x < x + x2 && this.agnes.y > y - y1 && this.agnes.y < y + y2);
+    }
+
+    onAnimationUpdate(animation, frame) {
+        if (animation.key === 'agnes_idleM') {
+            if (frame.index === 1) {
+                pauseForDuration(this, animation, 400);
+            } else if (frame.index === 3) {
+                pauseForDuration(this, animation, 200);
+            } else {
+                pauseForDuration(this, animation, 100);
+            }
+        }
     }
 }

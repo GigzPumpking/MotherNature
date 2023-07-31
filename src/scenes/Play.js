@@ -4,6 +4,9 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        // stop all sounds  
+        this.sound.stopAll();
+
         cutscene = false;
         conversations = [];
 
@@ -17,7 +20,7 @@ class Play extends Phaser.Scene {
 
         this.createCharacters();
 
-        this.cutsceneZero();
+        this.cutsceneTwo();
 
         this.scene.launch(ui);
     }
@@ -427,7 +430,12 @@ class Play extends Phaser.Scene {
                     x: this.nigel.x + 20*rescale,
                     duration: 1500,
                     ease: 'Linear',
+                    onProgress: () => {
+                        footsteps_snow.rate = 1;
+                        footsteps_snow.play();
+                    },
                     onComplete: () => {
+                        footsteps_snow.stop();
                         this.nigel.anims.play('nigel_idle');
                         // fade nigels alpha
                         this.tweens.add({
@@ -444,7 +452,13 @@ class Play extends Phaser.Scene {
                             x: this.abby.x - 30*rescale,
                             duration: 1500,
                             ease: 'Linear',
+                            onProgress: () => {
+                                footsteps_snow.rate = 1.3;
+                                footsteps_snow.play();
+                            },
                             onComplete: () => {
+                                footsteps_snow.stop();
+                                footsteps_snow.rate = 1.5;
                                 this.player.anims.play('agnes_idle');
 
             this.createTextBubble(this.player, "Hey Abby...\nUhhh this is a\nlittle awkward,", 3, false, () => {
@@ -468,25 +482,25 @@ class Play extends Phaser.Scene {
             this.createTextBubble(this.abby, "He'll have to come out for his legendary solo on this song…", 3, true, () => {
             this.createTextBubble(this.abby, "I know he misses it deep down!", 3, true, () => {
             this.createTextBubble(this.player, "Let's do this.", 3, false, () => {
-                cutscene = false;
-                ui.cinematicViewExit();
-                this.camera.startFollow(this.player, true, 0.25, 0.25);
-                
-                // Temporary Transition
-                // Wait 1 second
-                this.time.delayedCall(1000, () => {
-                    this.nigel.setAlpha(1);
-                    this.nigel.flipX = true;
-                    this.nigel.x = centerX/2 + this.tortoiseHousex + 40*rescale;
-                    this.cutsceneThree();
-                });
-
+                this.scene.launch(mus).pause();
             }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }); }});
                 
         }}); }); }); }); }); }); }); });
     }
 
     cutsceneThree() {
+        this.nigel.setAlpha(1);
+        this.nigel.flipX = true;
+        this.nigel.anims.play('nigel_walk');
+        
+        this.tweens.add({
+            targets: this.nigel,
+            x: centerX/2 + this.tortoiseHousex + 30*rescale,
+            duration: 1500,
+            ease: 'Linear',
+            onComplete: () => {
+                this.nigel.anims.play('nigel_idle');
+
         this.player.setAlpha(1);
         this.player.x = this.abby.x - 30*rescale;
         cutscene = true;
@@ -536,7 +550,7 @@ class Play extends Phaser.Scene {
                 cutscene = false;
                 ui.cinematicViewExit();
                 this.camera.startFollow(this.player, true, 0.25, 0.25);
-        }); }); }); }); }); }); }); }); }); }}); }); }); }); }); }); }); }); }); }); }); });
+        }); }); }); }); }); }); }); }); }); }}); }); }); }); }); }); }); }); }); }); }); }); }});
     }
 
     cutsceneFour() {

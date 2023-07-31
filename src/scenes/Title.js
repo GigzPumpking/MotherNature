@@ -4,7 +4,6 @@ class Title extends Phaser.Scene {
     }
 
     create() {
-
         this.camera = this.cameras.main;
         cameraSettings(this.camera);
         
@@ -34,6 +33,12 @@ class Title extends Phaser.Scene {
         this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.keyO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
+
+        music[0].play();
+        // on completion of music, play loop
+        music[0].on('complete', () => {
+            music[1].play();
+        })
     }
 
     update() {

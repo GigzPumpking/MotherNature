@@ -84,7 +84,6 @@ let currScene = null;
 let prevScene = null;
 
 // Music List
-
 let music = [];
 
 // Default Audio Config

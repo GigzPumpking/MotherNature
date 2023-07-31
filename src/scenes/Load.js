@@ -112,6 +112,12 @@ class Load extends Phaser.Scene {
         this.load.image('resumePHover', 'yellow_resume.png');
         this.load.image('restartPHover', 'yellow_restart.png');
 
+        // music
+        this.load.path = 'assets/music/';
+        this.load.audio('Title_winter_ambient', 'Title_winter_ambience_final_intro.mp3');
+        this.load.audio('Title_winter_ambient_loop', 'Title_winter_ambience_final_loop.mp3');
+        this.load.audio('guitar_minigame', 'guitar_repaired_final.mp3');
+
         // tunnel assets
         this.load.path = 'assets/tunnel/';
 
@@ -160,6 +166,13 @@ class Load extends Phaser.Scene {
 
         play.anims.create({
             key: 'agnes_idle',
+            frames: this.anims.generateFrameNumbers('agnesIdle', { start: 0, end: 2, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        mus.anims.create({
+            key: 'agnes_idleM',
             frames: this.anims.generateFrameNumbers('agnesIdle', { start: 0, end: 2, first: 0}),
             frameRate: 10,
             repeat: -1
@@ -220,6 +233,11 @@ class Load extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
+
+        // music
+        music[0] = this.sound.add('Title_winter_ambient');
+        music[1] = this.sound.add('Title_winter_ambient_loop');
+        music[2] = this.sound.add('guitar_minigame');
 
         // create agnes voice
         agnesVoice = this.sound.add('agnesVoice');
