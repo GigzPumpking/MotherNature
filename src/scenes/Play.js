@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
 
         this.createCharacters();
 
-        this.cutsceneTwo();
+        this.cutsceneZero();
 
         this.scene.launch(ui);
     }
