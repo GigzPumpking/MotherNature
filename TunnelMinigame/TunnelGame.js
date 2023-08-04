@@ -51,9 +51,10 @@ class TunnelGame extends Phaser.Scene
                     this.circle.setTexture('circleG');
                     this.smc.setTexture('smcG');
                     this.lineIsMoving = false;
+                    this.blink([this.circle, this.smc, this.line]);
                 }
                 else{
-                    this.cameras.main.shake(50, 0.01);
+                    this.cameras.main.shake(100, 0.02);
                     this.circle.setTexture('circleR');
                     this.smc.setTexture('smcR')
                     this.lineIsMoving = false;
@@ -76,6 +77,19 @@ class TunnelGame extends Phaser.Scene
         const acceptableAngleDifference = 10;
     
         return Math.abs(angleDifference) <= acceptableAngleDifference;
+    }
+
+    blink(objects) {
+        objects.forEach((object) => {
+            this.tweens.add({
+                targets: object,
+                alpha: 0,
+                duration: 100,
+                ease: 'Linear',
+                yoyo: true, 
+                repeat: 2
+            });
+        });
     }
 
     resetGame() {
