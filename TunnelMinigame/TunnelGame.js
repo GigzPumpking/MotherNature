@@ -3,6 +3,9 @@ class TunnelGame extends Phaser.Scene
     constructor(){
         super("tunnelGame");
         this.lineIsMoving = true;
+        this.score = 0;
+        this.rotationSpeed = 0.02;
+
     }
 
     preload(){
@@ -21,6 +24,13 @@ class TunnelGame extends Phaser.Scene
 
     create()
     {
+        this.smcPositions = [
+            {x: this.sys.game.config.width - 570, y: this.sys.game.config.height - 500},
+            {x: this.sys.game.config.width - 530, y: this.sys.game.config.height - 325},
+            {x: this.sys.game.config.width - 690, y: this.sys.game.config.height - 450},
+            {x: this.sys.game.config.width - 558, y: this.sys.game.config.height - 500},
+        ];  
+
         this.background = this.add.image(0, 0, 'TunnelBg').setOrigin(0,0);
         this.background.displayWidth = this.sys.game.config.width;
         this.background.displayHeight = this.sys.game.config.height;
@@ -31,27 +41,36 @@ class TunnelGame extends Phaser.Scene
         this.circle = this.add.sprite(this.sys.game.config.width - 600, this.sys.game.config.height - 400 , "circleP");
         this.circle.setScale(4);
 
-        this.smc = this.add.sprite(this.sys.game.config.width - 570, this.sys.game.config.height - 500 , "smcP");
+
+        this.smc = this.add.sprite(this.sys.game.config.width - 694, this.sys.game.config.height - 350 , "smcP");
         this.smc.setScale(4);
 
         this.line = this.add.sprite(this.sys.game.config.width - 600, this.sys.game.config.height - 400 , "line").setOrigin(0,1);
         this.line.setScale(3.15);
-    }
-
-    update()
-    {
-
-        if (this.lineIsMoving){
-            this.line.rotation += 0.02;
-        }
 
         this.input.on('pointerdown', function (pointer) {
             if (pointer.leftButtonDown()) {
+
                 if (this.checkOverlap()) {
                     this.circle.setTexture('circleG');
                     this.smc.setTexture('smcG');
                     this.lineIsMoving = false;
                     this.blink([this.circle, this.smc, this.line]);
+
+                    this.score += 1;
+                    this.rotationSpeed += 0.02;
+
+                    if (this.score < this.smcPositions.length){
+                        this.smc.x = this.smcPositions[this.score].x;
+                        this.smc.y = this.smcPositions[this.score].y;
+                    }
+
+                    if (this.score >= 4){
+                        console.log("out of tunnel");
+                    }
+                    else{
+                        this.time.delayedCall(1000, this.resetGame, [], this);
+                    }
                 }
                 else{
                     this.cameras.main.shake(100, 0.02);
@@ -62,23 +81,44 @@ class TunnelGame extends Phaser.Scene
                 }
             }
         }, this);
+
+    }
+
+    update()
+    {
+
+        if (this.lineIsMoving){
+            this.line.rotation += this.rotationSpeed;
+        }
+
+        const tipX = this.line.x + this.line.width * Math.cos(0);  // assuming 0 rotation
+        const tipY = this.line.y + this.line.width * Math.sin(0); 
+
+        const dx = tipX - this.circle.x;
+        const dy = tipY - this.circle.y;
+        const angle = (Phaser.Math.RadToDeg(Math.atan2(dy, dx)) + 360) % 360;
+
     }
 
     checkOverlap() {
-        const lineAngle = Phaser.Math.RadToDeg(this.line.rotation + Math.PI / 2) % 360; 
+        const dx = this.smc.x - this.circle.x;
+        const dy = this.smc.y - this.circle.y;
+        let angleToSMC = (Phaser.Math.RadToDeg(Math.atan2(dy, dx)) + 360) % 360;
         
-        const smcCenterX = this.smc.x + this.smc.displayWidth / 2;
-        const smcCenterY = this.smc.y + this.smc.displayHeight / 2;
-        
-        const angleToSmc = Phaser.Math.RadToDeg(Math.atan2(this.line.y - smcCenterY, smcCenterX - this.line.x)) % 360;
-        
-        const angleDifference = Phaser.Math.Angle.ShortestBetween(lineAngle, angleToSmc);
-        
-        const acceptableAngleDifference = 10;
+
+        let lineAngle = (Phaser.Math.RadToDeg(this.line.rotation) + 360) % 360;
+
+        lineAngle = (lineAngle - 45 ) % 360;
     
+        const angleDifference = Phaser.Math.Angle.ShortestBetween(lineAngle, angleToSMC);
+        const acceptableAngleDifference = 13;
+    
+        console.log(`Line Angle: ${lineAngle}, Angle to SMC: ${angleToSMC}, Difference: ${angleDifference}`);
+        
         return Math.abs(angleDifference) <= acceptableAngleDifference;
     }
-
+    
+    
     blink(objects) {
         objects.forEach((object) => {
             this.tweens.add({
@@ -98,8 +138,5 @@ class TunnelGame extends Phaser.Scene
         this.smc.setTexture('smcP');
         this.lineIsMoving = true;
     }
-    
-    
-    
     
 }
