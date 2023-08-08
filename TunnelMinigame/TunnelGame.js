@@ -26,6 +26,7 @@ class TunnelGame extends Phaser.Scene
     {
         this.smcPositions = [
             {x: this.sys.game.config.width - 570, y: this.sys.game.config.height - 500},
+            {x: this.sys.game.config.width - 570, y: this.sys.game.config.height - 500},
             {x: this.sys.game.config.width - 530, y: this.sys.game.config.height - 325},
             {x: this.sys.game.config.width - 690, y: this.sys.game.config.height - 450},
             {x: this.sys.game.config.width - 558, y: this.sys.game.config.height - 500},
@@ -52,6 +53,11 @@ class TunnelGame extends Phaser.Scene
             if (pointer.leftButtonDown()) {
 
                 if (this.checkOverlap()) {
+                    /*
+                    ------------------------------------------------------------------
+                    player got it right
+                    ------------------------------------------------------------------
+                    */
                     this.circle.setTexture('circleG');
                     this.smc.setTexture('smcG');
                     this.lineIsMoving = false;
@@ -65,7 +71,12 @@ class TunnelGame extends Phaser.Scene
                         this.smc.y = this.smcPositions[this.score].y;
                     }
 
-                    if (this.score >= 4){
+                    if (this.score >= 5){
+                        /*
+                        ------------------------------------------------------------------
+                        Out of Tunnel code here
+                        ------------------------------------------------------------------
+                        */
                         console.log("out of tunnel");
                     }
                     else{
@@ -73,6 +84,11 @@ class TunnelGame extends Phaser.Scene
                     }
                 }
                 else{
+                    /*
+                    ------------------------------------------------------------------
+                    player got it wrong
+                    ------------------------------------------------------------------
+                    */
                     this.cameras.main.shake(100, 0.02);
                     this.circle.setTexture('circleR');
                     this.smc.setTexture('smcR')
@@ -113,7 +129,6 @@ class TunnelGame extends Phaser.Scene
         const angleDifference = Phaser.Math.Angle.ShortestBetween(lineAngle, angleToSMC);
         const acceptableAngleDifference = 13;
     
-        console.log(`Line Angle: ${lineAngle}, Angle to SMC: ${angleToSMC}, Difference: ${angleDifference}`);
         
         return Math.abs(angleDifference) <= acceptableAngleDifference;
     }
