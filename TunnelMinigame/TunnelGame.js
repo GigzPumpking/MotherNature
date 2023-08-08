@@ -49,6 +49,15 @@ class TunnelGame extends Phaser.Scene
         this.line = this.add.sprite(this.sys.game.config.width - 600, this.sys.game.config.height - 400 , "line").setOrigin(0,1);
         this.line.setScale(3.15);
 
+        // Create two black rectangles for the fade effect.
+        this.topRect = this.add.graphics({ fillStyle: { color: 0x000000 } });
+        this.bottomRect = this.add.graphics({ fillStyle: { color: 0x000000 } });
+        
+        // Initially, they have zero height.
+        this.topRectHeight = 0;
+        this.bottomRectHeight = 0;
+        this.updateRects();
+
         this.input.on('pointerdown', function (pointer) {
             if (pointer.leftButtonDown()) {
 
@@ -66,21 +75,17 @@ class TunnelGame extends Phaser.Scene
                     this.score += 1;
                     this.rotationSpeed += 0.02;
 
-                    if (this.score < this.smcPositions.length){
-                        this.smc.x = this.smcPositions[this.score].x;
-                        this.smc.y = this.smcPositions[this.score].y;
-                    }
-
                     if (this.score >= 5){
                         /*
                         ------------------------------------------------------------------
-                        Out of Tunnel code here
+                        Out of Tunnel code here, scene transition?
                         ------------------------------------------------------------------
                         */
                         console.log("out of tunnel");
                     }
                     else{
-                        this.time.delayedCall(1000, this.resetGame, [], this);
+                        this.time.delayedCall(500, this.fadeOutAndIn, [], this);
+                        this.time.delayedCall(1450, this.resetGame, [], this);
                     }
                 }
                 else{
@@ -152,6 +157,49 @@ class TunnelGame extends Phaser.Scene
         this.circle.setTexture('circleP');
         this.smc.setTexture('smcP');
         this.lineIsMoving = true;
+        if (this.score < this.smcPositions.length){
+            this.smc.x = this.smcPositions[this.score].x;
+            this.smc.y = this.smcPositions[this.score].y;
+        }
+
+    }
+
+    updateRects() {
+        this.topRect.clear().fillRect(0, 0, this.sys.game.config.width, this.topRectHeight);
+        this.bottomRect.clear().fillRect(0, this.sys.game.config.height - this.bottomRectHeight, this.sys.game.config.width, this.bottomRectHeight);
+    }
+
+    fadeOutAndIn() {
+        let targetHeight = this.sys.game.config.height / 2;
+    
+        this.tweens.add({
+            targets: this,
+            topRectHeight: targetHeight,
+            bottomRectHeight: targetHeight,
+            duration: 1000,
+            ease: 'Sine.easeOut',
+            onComplete: () => {  
+                this.time.delayedCall(700, this.fadeIn, [], this);
+            },
+            onUpdate: () => {
+                this.updateRects();
+            }
+        });
+    }
+    
+    
+
+    fadeIn() {
+        this.tweens.add({
+            targets: this,
+            topRectHeight: 0,
+            bottomRectHeight: 0,
+            duration: 1000,
+            ease: 'Sine.easeIn',
+            onUpdate: () => {
+                this.updateRects();
+            }
+        });
     }
     
 }
