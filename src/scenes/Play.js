@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
 
         this.createCharacters();
 
-        this.cutsceneZero();
+        this.cutsceneFour();
 
         this.scene.launch(ui);
     }
@@ -630,6 +630,7 @@ class Play extends Phaser.Scene {
                 this.createTextBubble(this.lamby, "JUST DO IT.", 3, true, () => {
                     cutscene = false;
                     ui.cinematicViewExit();
+                    this.scene.launch(tun).pause();
                 }); }); }); }); }); }); }); }); }); });
             }
         });

@@ -14,7 +14,7 @@ let config = {
             fps: 60
         }
     },
-    scene: [ Load, Title, Play, UI, Music, Options, Controls ]
+    scene: [ Load, Title, Play, UI, Music, TunnelGame, Options, Controls ]
 }
 
 var fontStyle = {
@@ -77,6 +77,7 @@ let play = null;
 let ui = null;
 let inv = null;
 let mus = null;
+let tun = null;
 
 // Current & Previous Scene
 

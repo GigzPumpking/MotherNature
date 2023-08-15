@@ -121,6 +121,16 @@ class Load extends Phaser.Scene {
         // tunnel assets
         this.load.path = 'assets/tunnel/';
 
+        this.load.image("TunnelBg", "tunneConceptl.png");
+        this.load.image("agnes", "agnes_tunnel.png");
+        this.load.image("circleG", "circle_green.png");
+        this.load.image("circleP", "circle_purple.png");
+        this.load.image("circleR", "circle_red.png");
+        this.load.image("line", "line.png");
+        this.load.image("smcG", "smcircle_green.png");
+        this.load.image("smcP", "smcircle_purple.png");
+        this.load.image("smcR", "smcircle_red.png");
+
         // loading bar
         // See: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/loader/
         let loadingBar = this.add.graphics();
@@ -145,6 +155,7 @@ class Load extends Phaser.Scene {
         ui = this.scene.get('uiScene');
         inv = this.scene.get('inventoryScene');
         mus = this.scene.get('musicScene');
+        tun = this.scene.get('tunnelScene');
 
         // Assign music to variables
         music = [];
