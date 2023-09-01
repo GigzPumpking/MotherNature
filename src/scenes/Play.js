@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
 
         this.createCharacters();
 
-        this.cutsceneFour();
+        this.cutsceneZero();
 
         this.scene.launch(ui);
     }
@@ -49,7 +49,8 @@ class Play extends Phaser.Scene {
         }
 
         if (!cutscene && this.player.x > this.tunnelBack.x + 40*rescale && cutsceneNum === 4) {
-            this.cutsceneFive();
+            brightness = 0;
+            this.scene.launch(tun).pause();
         }
 
         if (!cutscene && this.player.x > this.tunnelBack2.x + 210*rescale && cutsceneNum === 5) {
@@ -630,13 +631,13 @@ class Play extends Phaser.Scene {
                 this.createTextBubble(this.lamby, "JUST DO IT.", 3, true, () => {
                     cutscene = false;
                     ui.cinematicViewExit();
-                    this.scene.launch(tun).pause();
                 }); }); }); }); }); }); }); }); }); });
             }
         });
     }
 
     cutsceneFive() {
+        brightness = 1;
         this.player.setAlpha(1);
         this.player.x = this.tunnelBack2.x - 30*rescale;
         cutscene = true;

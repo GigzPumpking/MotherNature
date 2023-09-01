@@ -67,7 +67,9 @@ class TunnelGame extends Phaser.Scene
                         Out of Tunnel code here, scene transition?
                         ------------------------------------------------------------------
                         */
-                        console.log("out of tunnel");
+                        this.scene.resume(play);
+                        play.cutsceneFive();
+                        this.scene.stop();
                     }
                     else{
                         this.time.delayedCall(500, this.fadeOutAndIn, [], this);
@@ -93,7 +95,6 @@ class TunnelGame extends Phaser.Scene
 
     update()
     {
-        console.log("Tunnel Game Score: " + this.score);
 
         if (this.lineIsMoving){
             this.line.rotation += this.rotationSpeed;
