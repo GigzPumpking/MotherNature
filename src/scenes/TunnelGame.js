@@ -2,38 +2,48 @@ class TunnelGame extends Phaser.Scene
 {
     constructor(){
         super("tunnelScene");
-        this.lineIsMoving = true;
+        this.lineIsMoving = false;
         this.score = 0;
         this.rotationSpeed = 0.02;
-
+        this.lineActive = false;
     }
 
     create()
     {
         this.smcPositions = [
-            {x: this.sys.game.config.width - 570, y: this.sys.game.config.height - 500},
-            {x: this.sys.game.config.width - 570, y: this.sys.game.config.height - 500},
-            {x: this.sys.game.config.width - 530, y: this.sys.game.config.height - 325},
-            {x: this.sys.game.config.width - 690, y: this.sys.game.config.height - 450},
-            {x: this.sys.game.config.width - 558, y: this.sys.game.config.height - 500},
+            {x: w - 570, y: h - 500},
+            {x: w - 570, y: h - 500},
+            {x: w - 530, y: h - 325},
+            {x: w - 690, y: h - 450},
+            {x: w - 558, y: h - 500},
         ];  
 
         this.background = this.add.image(0, 0, 'TunnelBg').setOrigin(0,0);
-        this.background.displayWidth = this.sys.game.config.width;
-        this.background.displayHeight = this.sys.game.config.height;
+        this.background.displayWidth = w;
+        this.background.displayHeight = h;
 
-        this.agnes = this.add.sprite(this.sys.game.config.width - 1100, this.sys.game.config.height - 300 , "agnes");
-        this.agnes.setScale(2.5);
+        this.lamby = this.add.sprite(-15, h - 190 , "lamby");
+        this.lamby.setScale(3);
 
-        this.circle = this.add.sprite(this.sys.game.config.width - 600, this.sys.game.config.height - 400 , "circleP");
+        this.agnes = this.add.sprite(50, h - 190 , "agnes");
+        this.agnes.setScale(3);
+
+        this.agnes.on('animationupdate', this.onAnimationUpdate, this);
+        this.lamby.on('animationupdate', this.onAnimationUpdate, this);
+
+        this.agnes.anims.play('agnes_walk');
+
+        this.circle = this.add.sprite(w - 600, h - 400 , "circleP");
         this.circle.setScale(4);
+        this.circle.alpha = 0;
 
-
-        this.smc = this.add.sprite(this.sys.game.config.width - 694, this.sys.game.config.height - 350 , "smcP");
+        this.smc = this.add.sprite(w - 694, h - 350 , "smcP");
         this.smc.setScale(4);
+        this.smc.alpha = 0;
 
-        this.line = this.add.sprite(this.sys.game.config.width - 600, this.sys.game.config.height - 400 , "line").setOrigin(0,1);
+        this.line = this.add.sprite(w - 600, h - 400 , "line").setOrigin(0,1);
         this.line.setScale(3.15);
+        this.line.alpha = 0;
 
         // Create two black rectangles for the fade effect.
         this.topRect = this.add.graphics({ fillStyle: { color: 0x000000 } });
@@ -61,20 +71,10 @@ class TunnelGame extends Phaser.Scene
                     this.score += 1;
                     this.rotationSpeed += 0.02;
 
-                    if (this.score >= 5){
-                        /*
-                        ------------------------------------------------------------------
-                        Out of Tunnel code here, scene transition?
-                        ------------------------------------------------------------------
-                        */
-                        this.scene.resume(play);
-                        play.cutsceneFive();
-                        this.scene.stop();
-                    }
-                    else{
-                        this.time.delayedCall(500, this.fadeOutAndIn, [], this);
-                        this.time.delayedCall(1450, this.resetGame, [], this);
-                    }
+                    this.time.delayedCall(500, this.deactivateLine, [], this);
+
+                    this.time.delayedCall(1450, this.resetGame, [], this);
+                    
                 }
                 else{
                     /*
@@ -91,6 +91,64 @@ class TunnelGame extends Phaser.Scene
             }
         }, this);
 
+        this.moveKeys = this.input.keyboard.addKeys({
+            'left': Phaser.Input.Keyboard.KeyCodes.A,
+            'right': Phaser.Input.Keyboard.KeyCodes.D
+        });
+    }
+
+    activateLine(){
+        // tween alpha to 1
+        this.tweens.add({
+            targets: this.line,
+            alpha: 1,
+            duration: 500,
+            ease: 'Linear'
+        });
+
+        this.tweens.add({
+            targets: this.circle,
+            alpha: 1,
+            duration: 500,
+            ease: 'Linear'
+        });
+
+        this.tweens.add({
+            targets: this.smc,
+            alpha: 1,
+            duration: 500,
+            ease: 'Linear'
+        });
+
+        this.lineIsMoving = true;
+        this.lineActive = true;
+    }
+
+    deactivateLine(){
+        // tween alpha to 0
+        this.tweens.add({
+            targets: this.line,
+            alpha: 0,
+            duration: 500,
+            ease: 'Linear'
+        });
+
+        this.tweens.add({
+            targets: this.circle,
+            alpha: 0,
+            duration: 500,
+            ease: 'Linear'
+        });
+
+        this.tweens.add({
+            targets: this.smc,
+            alpha: 0,
+            duration: 500,
+            ease: 'Linear'
+        });
+
+        this.lineIsMoving = false;
+        this.lineActive = false;
     }
 
     update()
@@ -106,6 +164,29 @@ class TunnelGame extends Phaser.Scene
         const dx = tipX - this.circle.x;
         const dy = tipY - this.circle.y;
         const angle = (Phaser.Math.RadToDeg(Math.atan2(dy, dx)) + 360) % 360;
+
+        if (this.moveKeys.right.isDown && !this.lineActive) {
+            // move agnes right
+            this.lamby.x += 2;
+            this.agnes.x += 2;
+            this.lamby.anims.play('lamby_walk', true);
+            this.agnes.anims.play('agnes_walk', true);
+            this.agnes.flipX = false;
+            if ((this.agnes.x == 150 || this.agnes.x == 400 || this.agnes.x == 650 || this.agnes.x == 900 || this.agnes.x == 1150) && !this.lineActive){
+                this.activateLine();
+            }
+
+            if (this.agnes.x >= 1250){
+                this.scene.resume(play);
+                play.cutsceneFive();
+                this.scene.stop();
+            }
+        }
+        else {
+            // stop
+            this.agnes.anims.play('agnes_idle', true);
+            this.lamby.anims.play('lamby_idle', true);
+        }
 
     }
 
@@ -153,12 +234,12 @@ class TunnelGame extends Phaser.Scene
     }
 
     updateRects() {
-        this.topRect.clear().fillRect(0, 0, this.sys.game.config.width, this.topRectHeight);
-        this.bottomRect.clear().fillRect(0, this.sys.game.config.height - this.bottomRectHeight, this.sys.game.config.width, this.bottomRectHeight);
+        this.topRect.clear().fillRect(0, 0, w, this.topRectHeight);
+        this.bottomRect.clear().fillRect(0, h - this.bottomRectHeight, w, this.bottomRectHeight);
     }
 
     fadeOutAndIn() {
-        let targetHeight = this.sys.game.config.height / 2;
+        let targetHeight = h / 2;
     
         this.tweens.add({
             targets: this,
@@ -189,5 +270,16 @@ class TunnelGame extends Phaser.Scene
             }
         });
     }
-    
+
+    onAnimationUpdate(animation, frame) {
+        if (animation.key === 'agnes_idle' || animation.key === 'lamby_idle') {
+            if (frame.index === 1) {
+                pauseForDuration(play, animation, 400);
+            } else if (frame.index === 3) {
+                pauseForDuration(play, animation, 200);
+            } else {
+                pauseForDuration(play, animation, 100);
+            }
+        }
+    }
 }

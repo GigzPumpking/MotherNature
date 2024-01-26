@@ -22,8 +22,8 @@ class Load extends Phaser.Scene {
         this.load.image("Scene2", "Scene2.png");
         this.load.image("Scene3", "Scene3.png");
         this.load.image("Scene4", "Scene4.png");
-        this.load.image("Scene5Sheet", "Scene5.png");
-        this.load.spritesheet("Scene5", "Scene5.png", { frameWidth: 160, frameHeight: 90, startFrame: 0, endFrame: 3 });
+        this.load.image("Scene5Sheet", "scene5.png");
+        this.load.spritesheet("Scene5", "scene5.png", { frameWidth: 160, frameHeight: 90, startFrame: 0, endFrame: 3 });
         this.load.image("Scene6", "Scene6.png");
         this.load.image("Scene7", "Scene7.png");
 
@@ -99,7 +99,7 @@ class Load extends Phaser.Scene {
         this.load.audio('footsteps_snow', 'footsteps_snow.mp3');
         this.load.audio('trip', 'tripping_in_snow.mp3');
         this.load.audio('shadowy_figure_woosh', 'shadowy_figure_woosh.mp3');
-        this.load.audio('menuSelect', 'menu_select.mp3');
+        this.load.audio('menuSelect', 'Menu_select.mp3');
 
         // pause assets
         this.load.path = 'assets/pause/';

@@ -46,17 +46,17 @@ class Music extends Phaser.Scene {
         this.nigel.setAlpha(this.greenBar.displayHeight / this.redBar.displayHeight);
         this.dadHead.y = this.greenBar.y - this.greenBar.displayHeight;
 
-        this.slice.rotation += 0.01;
+        this.slice.rotation += 0.02;
 
         var xy = circleXY(this.slice.x, this.slice.y, 40*rescale, this.slice.rotation);
 
         // If this.agnes is touching the slice, increase the green bar
         if (this.progressUpdateBool(xy[0], xy[1], 50, 50, 50, 50)) {
-            if (this.greenBar.displayHeight < this.redBar.displayHeight) this.greenBar.displayHeight += 0.5;
+            if (this.greenBar.displayHeight < this.redBar.displayHeight) this.greenBar.displayHeight += 0.3;
         } else if (this.progressUpdateBool(xy[0], xy[1], 100, 100, 100, 100)) {
-            if (this.greenBar.displayHeight < this.redBar.displayHeight) this.greenBar.displayHeight += 0.25;
+            if (this.greenBar.displayHeight < this.redBar.displayHeight) this.greenBar.displayHeight += 0.15;
         } else {
-            if (this.greenBar.displayHeight > 0) this.greenBar.displayHeight -= 0.5;
+            if (this.greenBar.displayHeight > 0) this.greenBar.displayHeight -= 0.75;
         }
 
         if (this.greenBar.displayHeight >= this.redBar.displayHeight) {
@@ -67,7 +67,7 @@ class Music extends Phaser.Scene {
         }
 
         if (this.keyA.isDown) {
-            this.agnes.speed = -0.01;
+            this.agnes.speed = -0.02;
             this.agnes.update();
             if (this.agnes.sin > 0) {
                 this.agnes.flipX = false;
@@ -76,7 +76,7 @@ class Music extends Phaser.Scene {
         }
 
         if (this.keyD.isDown) {
-            this.agnes.speed = 0.01;
+            this.agnes.speed = 0.02;
             this.agnes.update();
             if (this.agnes.sin > 0) this.agnes.flipX = true;
             else this.agnes.flipX = false;
